@@ -1,0 +1,1 @@
+/usr/bin/cc  -Wall -Wextra -Wno-unused-parameter -Wno-macro-redefined -g CMakeFiles/alice.dir/alice.c.o CMakeFiles/alice.dir/util.c.o -o /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice  -Wl,-rpath,/usr/local/lib /usr/local/lib/librelic.so /usr/local/lib/libpari.so /usr/lib/x86_64-linux-gnu/libgmp.so /usr/lib/x86_64-linux-gnu/libzmq.so 

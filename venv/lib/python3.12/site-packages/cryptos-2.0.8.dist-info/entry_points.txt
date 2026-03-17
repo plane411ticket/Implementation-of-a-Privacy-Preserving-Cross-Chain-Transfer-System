@@ -1,0 +1,9 @@
+[console_scripts]
+broadcast = crypto_scripts.broadcast:main
+convert_private_key = crypto_scripts.convert_private_key:main
+create_private_key = crypto_scripts.create_private_key:main
+cryptosend = crypto_scripts.cryptosend:main
+explorer = crypto_scripts.explorer:main
+get_block_sizes = crypto_scripts.get_block_sizes:main
+subscribe = crypto_scripts.subscribe:main
+view_private_key_addresses = crypto_scripts.view_private_key_addresses:main

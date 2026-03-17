@@ -236,13 +236,28 @@ int promise_init(bob_state_t state, void *socket) {
       RLC_THROW(ERR_CAUGHT);
     }      
     // Compute CL encryption secret/public key pair for the bob.
-		state->bob_cl_sk->sk = randomi(state->cl_params->bound);
-		state->bob_cl_pk->pk = nupow(state->cl_params->g_q, state->bob_cl_sk->sk, NULL);
+	state->bob_cl_sk->sk = randomi(state->cl_params->bound);  // hoặc strtoi nhỏ để test
 
-    const unsigned ec_sk_str_len = bn_size_str(state->bob_ec_sk->sk, 10);
-    char ec_sk_str[ec_sk_str_len];
-    bn_write_str(ec_sk_str, ec_sk_str_len, state->bob_ec_sk->sk, 10);
+	// Debug (giữ để xem)
+	pari_printf("Debug: g_q = %Ps\nsk = %Ps\nq = %Ps\n",
+	state->cl_params->g_q, state->bob_cl_sk->sk, state->cl_params->q);
 
+	// Powering: truyền NULL cho mod để dùng đúng cho Qfb
+	state->bob_cl_pk->pk = nupow(state->cl_params->g_q, state->bob_cl_sk->sk, NULL);
+
+	// Reduce form (rất nên, để pk gọn và chuẩn canonical trong CL)
+	state->bob_cl_pk->pk = qfbred(state->bob_cl_pk->pk);
+
+	// Debug kết quả pk
+	pari_printf("Debug: pk = %Ps\n", state->bob_cl_pk->pk);
+                //state->bob_cl_sk->sk = strtoi("123456789012345");
+		//state->bob_cl_pk->pk = nupow(state->cl_params->g_q, state->bob_cl_sk->sk,NULL);
+
+    //const unsigned ec_sk_str_len = bn_size_str(state->bob_ec_sk->sk, 10);
+    //char ec_sk_str[ec_sk_str_len + 1];
+    //bn_write_str(ec_sk_str, ec_sk_str_len, state->bob_ec_sk->sk, 10);
+    char ec_sk_str[256];
+    bn_write_str(ec_sk_str, sizeof(ec_sk_str), state->bob_ec_sk->sk, 10);
     GEN plain_ec_sk = strtoi(ec_sk_str);
     // compute ciphertext for signing key of tumbler
     if (cl_enc(ctx_sk_from_b, plain_ec_sk, state->bob_cl_pk, state->cl_params) != RLC_OK) {
@@ -944,7 +959,7 @@ int main(void)
     if (generate_cl_params(state->cl_params) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-
+    /**
     if (read_keys_from_file_alice_bob(BOB_KEY_FILE_PREFIX,
                                       state->bob_ec_sk,
                                       state->bob_ec_pk,
@@ -953,7 +968,7 @@ int main(void)
                                       state->tumbler_cl_pk) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-
+    **/
     bn_read_str(state->bob_ec_sk->sk, "D5428B52D9145EE5B51CEB5B1E0D382188E428BC79B45C2D034BA956BB84B316", strlen("D5428B52D9145EE5B51CEB5B1E0D382188E428BC79B45C2D034BA956BB84B316"), 16);
     printf("**sk_r:\n");
     bn_print(state->bob_ec_sk->sk); 

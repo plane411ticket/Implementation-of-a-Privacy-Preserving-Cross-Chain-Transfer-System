@@ -169,7 +169,11 @@ int registration_vtd_handler(alice_state_t state, void *socket, uint8_t *data) {
   char bin_sub_threshold_check[BITS_THRESHOLD_PARAM -1];
   uint8_t byte_sub_threshold[BYTES_THRESHOLD_LEN_PARAM];
 
-  bn_t q, tid, N_2, interval_L, e;  
+  bn_t q, tid, N_2, interval_L, e;
+  //bn_new(e);
+  //bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
+  //printf("\nGia tri e da nhap vao Alice: ");
+  //bn_print(e);  
   ec_t pk_share_lag;
   ec_t pk_share_I;
   ec_t pk_share_lag_tem;
@@ -250,6 +254,9 @@ int registration_vtd_handler(alice_state_t state, void *socket, uint8_t *data) {
     }
     pedersen_com_zk_proof_new(com_zk_proof);
     ec_curve_get_ord(q);
+    bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
+    printf("\nGia tri e da nhap vao Alice: ");
+    bn_print(e);
     // Deserialize the data from the message.
     for(int i = 0; i <BITS_STATISTIC_PARAM; i++)
     {      
@@ -907,6 +914,9 @@ int payment_ctx_handler(alice_state_t state, void *socket, uint8_t *data) {
     ec_new(g_to_k_gamma);
     cl_ciphertext_new(ctx_s_hat_from_t);
     zk_proof_new(pi_2dl);
+    bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
+    printf("\nGia tri e da nhap vao Alice: ");
+    bn_print(e);
     // Deserialize the data from the message.
     char ct_str[RLC_CL_CIPHERTEXT_SIZE];
     memcpy(ct_str, data, RLC_CL_CIPHERTEXT_SIZE);
@@ -1153,6 +1163,7 @@ int main(void)
       RLC_THROW(ERR_CAUGHT);
     }
 
+    /**
     if (read_keys_from_file_alice_bob(ALICE_KEY_FILE_PREFIX,
                                       state->alice_ec_sk,
                                       state->alice_ec_pk,
@@ -1161,8 +1172,9 @@ int main(void)
                                       state->tumbler_cl_pk) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
+    **/
 
-    bn_read_str(state->alice_ec_sk->sk, "AC60019C77CF2FB7FC752B281563CD6D0E4BB6D910EF5C4F3B7FEB23255A5C83", strlen("AC60019C77CF2FB7FC752B281563CD6D0E4BB6D910EF5C4F3B7FEB23255A5C83"), 16);
+    bn_read_str(state->alice_ec_sk->sk, "CC62414C758C52CE1A7B0ECE10BB8CAE753B63C1CEBD7F85A4FB57963B966462", strlen("CC62414C758C52CE1A7B0ECE10BB8CAE753B63C1CEBD7F85A4FB57963B966462"), 16);
     printf("**sk_s:\n");
     bn_print(state->alice_ec_sk->sk); 
     ec_mul_gen(state->alice_ec_pk->pk, state->alice_ec_sk->sk);

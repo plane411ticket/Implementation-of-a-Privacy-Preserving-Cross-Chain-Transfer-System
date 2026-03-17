@@ -509,8 +509,11 @@ int generate_cl_params(cl_params_t params) {
 
 		// Order of the secp256k1 elliptic curve group and the group G^q.
 		params->q = strtoi("115792089237316195423570985008687907852837564279074904382605163141518161494337");
-		params->g_q = qfi(g_q_a, g_q_b, g_q_c);
-
+		//params->g_q = qfi(g_q_a, g_q_b, g_q_c);
+                params->g_q = cgetg(4, t_QFB);
+		gel(params->g_q, 1) = g_q_a;        // a
+		gel(params->g_q, 2) = g_q_b;        // b
+		gel(params->g_q, 3) = g_q_c;        // c
 		GEN A = strtoi("0");
 		GEN B = strtoi("7");
 		GEN p = strtoi("115792089237316195423570985008687907853269984665640564039457584007908834671663");
@@ -542,7 +545,11 @@ int cl_enc(cl_ciphertext_t ciphertext,
     if (!mpodd(L)) {
       L = subii(L, params->q);
     }
-    GEN fm = qfi(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
+    //GEN fm = qfi(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
+    GEN fm = cgetg(4, t_QFB);
+    gel(fm, 1) = sqri(params->q);
+    gel(fm, 2) = mulii(L, params->q);
+    gel(fm, 3) = shifti(subii(sqri(L), params->Delta_K), -2);
     ciphertext->c2 = gmul(nupow(public_key->pk, ciphertext->r, NULL), fm);
   } RLC_CATCH_ANY {
     result_status = RLC_ERR;
@@ -1154,7 +1161,11 @@ int zk_cldl_prove(zk_proof_cldl_t proof,
 			L = subii(L, params->q);
 		}
 		// f^r_2 = (q^2, Lq, (L - Delta_k) / 4)
-		GEN fr2 = qfi(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
+		//GEN fr2 = qfi(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
+                GEN fr2 = cgetg(4, t_QFB);
+                gel(fr2, 1) = sqri(params->q);
+                gel(fr2, 2) = mulii(L, params->q);
+                gel(fr2, 3) = shifti(subii(sqri(L), params->Delta_K), -2);
 
 		proof->t1 = gmul(nupow(public_key->pk, r1, NULL), fr2);
 		ec_mul_gen(proof->t2, rlc_r2);
@@ -1261,8 +1272,11 @@ int zk_cldl_verify(const zk_proof_cldl_t proof,
 			L = subii(L, params->q);
 		}
 		// f^u_2 = (q^2, Lq, (L - Delta_k) / 4)
-		GEN fu2 = qfi(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
-
+		//GEN fu2 = qfi(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
+                GEN fu2 = cgetg(4, t_QFB);
+                gel(fu2, 1) = sqri(params->q);
+                gel(fu2, 2) = mulii(L, params->q);
+                gel(fu2, 3) = shifti(subii(sqri(L), params->Delta_K), -2);
 		ec_mul_gen(g_to_the_u2, rlc_u2);
 		ec_mul(Q_to_the_k, Q, rlc_k);
 		ec_add(t2_times_Q_to_the_k, proof->t2, Q_to_the_k);

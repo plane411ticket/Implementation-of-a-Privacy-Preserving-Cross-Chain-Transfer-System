@@ -1,5 +1,18 @@
 from cryptos import *
-
+import bech32
+def bech32_script_pubkey(bech32_addr):
+    """Tính scriptPubKey từ địa chỉ Bech32 (tb1q...) cho P2WPKH"""
+    hrp, data = bech32.bech32_decode(bech32_addr)
+    if hrp not in ['tb', 'bc']:
+        raise ValueError("Không phải địa chỉ Bech32 hợp lệ")
+    
+    witver, witprog = data[0], bech32.convertbits(data[1:], 5, 8, False)
+    if witver != 0 or len(witprog) != 20:
+        raise ValueError("Chỉ hỗ trợ P2WPKH (witver=0, 20 bytes)")
+    
+    # ScriptPubKey cho P2WPKH: OP_0 PUSH20 <20-byte hash>
+    script = bytes([0x00, 0x14]) + bytes(witprog)
+    return script
 def main():
 
     c = Bitcoin(testnet=True)
@@ -11,17 +24,21 @@ def main():
 
     pub_from_enc = encode_pubkey(joint_pk, "hex_compressed")
 
-    inputs = c.unspent("msjYibdB4v6SqyA4xjNPzwm7F21GcJn5jB")
+    inputs = c.unspent("tb1qlqxtrvc7peq4avaq2aedzk68ldc4jkerh38425")
     print("\nFrom inputs:\n", inputs)
  
-    outs = [{'value': 10000, 'address': 'mqVqVsMaqsSuLUMjhSgjMykhtEMNMmAzvh'}]
+    outs = [{'value': 10000, 'address': 'mvfnoX7WQV4SC1SjpW77z2GpDFEWTRi3Ns'}]
     
     tx = c.mktx(inputs,outs)
     print("\nUnsigned transaction:\n", tx)    
     tx_split = tx
 
-    script = addr_to_pubkey_script("msjYibdB4v6SqyA4xjNPzwm7F21GcJn5jB")
+    script = bech32_script_pubkey("tb1qlqxtrvc7peq4avaq2aedzk68ldc4jkerh38425")
+    print("\nScriptPubKey tự tính cho địa chỉ SegWit:", script.hex())
+    #script = addr_to_pubkey_script("tb1qlqxtrvc7peq4avaq2aedzk68ldc4jkerh38425")
     tx4 = signature_form(tx_split, 0, script, SIGHASH_ALL)    
+    
+
     print("\nSigning transaction:\n", tx4)
 
     bin_txh = bin_txhash(tx4, SIGHASH_ALL)
@@ -29,11 +46,11 @@ def main():
     e = hash_to_int(bin_txh)
     print("\nint of txhash connecting with hashcode 1:\n", e)
 
-    priv_s = "***"
+    priv_s = "cPHSGLYv5hJ53V3Weo8T1Wfu7aHbTa8vu19qZfdN9VXsY7Fxdh5M"
     k_s = deterministic_generate_k(tx4, priv_s)
     print("\nk_s value:\n", k_s)
 
-    priv_h1 = "***"
+    priv_h1 = "cUZ3EsCnFAsR4xBfRMM8TnK6TPXSXumxHPUBKoZZrNFAV8QiVND2"
     k_h1 = deterministic_generate_k(tx4, priv_h1)
     print("\nk_h1 value:\n", k_h1)
 

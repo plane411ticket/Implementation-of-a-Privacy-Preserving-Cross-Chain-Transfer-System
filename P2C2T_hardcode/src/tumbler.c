@@ -68,6 +68,16 @@ int handle_message(tumbler_state_t state, void *socket, zmq_msg_t message) {
     if (msg_handler(state, socket, msg->data) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
+    if (strcmp(msg->type, "payment_vtd") == 0 || strcmp(msg->type, "payment_z") == 0) {
+        printf("\n[TUMBLER] Ket qua Adaptor Signature sau khi chay %s:\n", msg->type);
+        if (state->sigma_r->r != NULL && state->sigma_r->s != NULL) {
+            printf("r = "); bn_print(state->sigma_r->r);
+            printf("s = "); bn_print(state->sigma_r->s);
+        } else {
+            printf("(Luu y: Bien r hoac s chua duoc khoi tao trong state)\n");
+        }
+        printf("--------------------------------------------------\n");
+    }
     printf("Finished executing %s.\n\n", msg->type);
   } RLC_CATCH_ANY {
     result_status = RLC_ERR;
@@ -124,6 +134,8 @@ int registration_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
   bn_t q, g_inter_prime, N_2, rand_ex, h_rand_ex, exp, N_plus_1, N_plus_1_sk, interval_B;     
   bn_t sk_b, interval_L, e;
+  //bn_new(e);
+  //bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
   cl_ciphertext_t ctx_sk_from_b;
   bn_t sk_shares[BITS_STATISTIC_PARAM];
   bn_t lagrange_bases[BITS_STATISTIC_PARAM];
@@ -193,6 +205,9 @@ int registration_handler(tumbler_state_t state, void *socket, uint8_t *data) {
       bn_new(lhtlp_ranges->Vs[i]);
       bn_new(lhtlp_ranges->Ws[i]);
     }
+    bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
+    printf("\nGia tri e da nhap vao Alice: ");
+    bn_print(e);
     polynomial_param_new(polyfunc, DEGREE_PARAM);
     
     ec_read_bin(state->alice_ec_pk->pk, data, RLC_EC_SIZE_COMPRESSED);
@@ -535,7 +550,10 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     for(int i=0; i<BITS_THRESHOLD_PARAM + 1; i++)
     {
       bn_new(pk_share_lag_latters[i]);
-    }  
+    }
+    bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
+    printf("\nGia tri e da nhap vao Alice: ");
+    bn_print(e);  
     
     // Deserialize the data from the message.
     ec_curve_get_ord(q);
@@ -845,7 +863,9 @@ int promise_zkdl_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     cl_ciphertext_new(ctx_hash);
     cl_ciphertext_new(ctx_sk);
     cl_ciphertext_new(ctx_s_hat);
-    
+    bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
+    printf("\nGia tri e da nhap vao Alice: ");
+    bn_print(e);
     // Deserialize the data from the message.
     ec_read_bin(state->go_to_rand_from_bob, data, RLC_EC_SIZE_COMPRESSED);
     ec_read_bin(pi_rand_from_bob->a, data + RLC_EC_SIZE_COMPRESSED, RLC_EC_SIZE_COMPRESSED);
@@ -1005,7 +1025,14 @@ int promise_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     ec_new(g_to_hash);
     ec_new(g_to_sk_hash);    
     cl_ciphertext_new(ctx_s_hat_from_b);
-
+    bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
+    printf("\nGia tri e da nhap vao Alice: ");
+    bn_print(e);
+    if (state->sigma_tb == NULL) {
+        state->sigma_tb = (sig_t)malloc(sizeof(sig_t)); 
+    }
+    bn_new(state->sigma_tb->s); 
+    bn_new(state->sigma_tb->r);
     // Deserialize the data from the message.
 
     bn_read_bin(plain_s_hat_from_b, data, RLC_BN_SIZE);
@@ -1279,6 +1306,10 @@ int payment_decom_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     cl_ciphertext_new(ctx_hash);
     cl_ciphertext_new(ctx_sk);
     cl_ciphertext_new(ctx_s_hat);
+    bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
+    printf("\nGia tri e da nhap vao Alice: ");
+    bn_print(e);
+    bn_new(state->com_c_from_a);
 
     ec_read_bin(state->g_to_rand_from_a, data, RLC_EC_SIZE_COMPRESSED);
     ec_read_bin(pi_g_to_k_from_a->a, data + RLC_EC_SIZE_COMPRESSED, RLC_EC_SIZE_COMPRESSED);
@@ -1426,6 +1457,8 @@ int payment_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     bn_new(inv_gamma);
     bn_new(k_mul_s_from_t);
     bn_new(s2);
+    bn_new(state->sigma_ta->r); 
+    bn_new(state->sigma_ta->s);
 
     bn_read_bin(state->sigma_ta->s, data, RLC_BN_SIZE);    
 
@@ -1496,13 +1529,19 @@ int payment_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 int main(void)
 {
   init();
+  if (core_init() != RLC_OK) 
+  {
+    printf("Lỗi: Không thể thiết lập tham số đường cong Elliptic!\n");
+    exit(1);
+  }
+  printf("Khởi tạo đường cong Elliptic thành công!\n");
   int result_status = RLC_OK;
   bn_t q;
   bn_t r, s;
   bn_null(q);
   bn_null(r);
   bn_null(s);
-
+  
   tumbler_state_t state;
   tumbler_state_null(state);
   
@@ -1526,15 +1565,32 @@ int main(void)
   }
 
   RLC_TRY {
-    tumbler_state_new(state);
+    //tumbler_state_new(state);
+    //ec_curve_get_ord(q);
     bn_new(q);
+    ep_curve_get_ord(q);
     bn_new(r);
-		bn_new(s);
-    ec_curve_get_ord(q);
+    bn_new(s);
+    
+    //ep_curve_get_ord(q);
+    printf("Gia tri q hien tai: ");
+    bn_print(q);
+    if (bn_is_zero(q)) {
+             
+             ep_param_set(SECG_K256); 
+             ep_curve_get_ord(q);
+             printf("Gia tri q sau khi ep nap: ");
+             bn_print(q);
+     }
+    //tumbler_state_t state;
+    //tumbler_state_null(state);
+    tumbler_state_new(state);
+
     if (generate_cl_params(state->cl_params) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
     
+    /**
     if (read_keys_from_file_tumbler(state->tumbler_ec_sk,
                                     state->tumbler_ec_pk,
                                     state->tumbler_ps_sk,
@@ -1545,10 +1601,13 @@ int main(void)
                                     state->bob_ec_pk) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
+    **/
 
-    bn_read_str(state->tumbler_ec_sk->sk, "6921E870D2D2915474F6C34DD68260436769C2EDACDC0FC816DF7E860128C999", strlen("6921E870D2D2915474F6C34DD68260436769C2EDACDC0FC816DF7E860128C999"), 16);
+    bn_read_str(state->tumbler_ec_sk->sk, "AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991", strlen("AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991"), 16);
     printf("**sk_h1:\n");
-    bn_print(state->tumbler_ec_sk->sk); 
+    bn_print(state->tumbler_ec_sk->sk);
+    printf("Kiem tra Order q: ");
+    bn_print(q); 
     ec_mul_gen(state->tumbler_ec_pk->pk, state->tumbler_ec_sk->sk);
     
     bn_read_str(state->tumbler_ec_sk2->sk, "DBC8B40E03E646C69814D43D87D8632AC79031B31793DB58073F2249C11698CF", strlen("DBC8B40E03E646C69814D43D87D8632AC79031B31793DB58073F2249C11698CF"), 16);
