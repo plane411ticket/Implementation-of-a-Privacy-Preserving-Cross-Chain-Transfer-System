@@ -30,6 +30,8 @@ int main(int argc, char *argv[]) {
 	pid_t alice, bob, tumbler;
 
 	/* --- BƯỚC 1: KHỞI TẠO TUMBLER --- */
+	printf("[WRAPPER] Khởi tạo tiến trình Tumbler...\n");
+	printf("===================\n");
 	tumbler = fork();
 	if (tumbler == 0) {
 		// Nhánh code này chạy trong TIẾN TRÌNH CON TUMBLER.
@@ -46,6 +48,8 @@ int main(int argc, char *argv[]) {
 	/* --- BƯỚC 2: KHỞI TẠO ALICE --- */
 	// Lưu ý: Thực tế hệ điều hành cấp lịch (schedule) song song, 
 	// nhưng Tumbler đã được ra lệnh chạy trước.
+	printf("[WRAPPER] Khởi tạo tiến trình Alice...\n");
+	printf("===================\n");
 	alice = fork();
 	if (alice == 0) {
 		// Nhánh code này chạy trong TIẾN TRÌNH CON ALICE.
@@ -60,6 +64,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* --- BƯỚC 3: KHỞI TẠO BOB VÀ QUẢN LÝ ĐỒNG BỘ --- */
+	printf("[WRAPPER] Khởi tạo tiến trình Bob...\n");
+	printf("===================\n");
 	bob = fork();
 	if (bob == -1) {
 		fprintf(stderr, "Error: failed to fork Bob.\n");
@@ -68,14 +74,21 @@ int main(int argc, char *argv[]) {
 		// Nhánh code này chạy trong TIẾN TRÌNH CHA (MẠNG CHÍNH / WRAPPER)
 		int status;
 		
+		printf("[WRAPPER] Đang chờ Bob hoàn thành giao dịch...\n");
+		printf("===================\n");
 		// waitpid: Hàm này sẽ "block" (chặn) luồng chạy của wrapper lại, 
 		// liên tục theo dõi tiến trình con Bob. Nó chỉ đi tiếp khi Bob gọi exit()
 		// hoặc kết thúc main() thành công (tức là Bob đã nhận tiền và giải mã xong mọi thứ).
 		waitpid(bob, &status, 0);
 		
+		printf("[WRAPPER] Bob đã tiến trình xong. Đang gửi tín hiệu SIGINT để tắt Tumbler...\n");
+		printf("===================\n");
 		// Đã tới đây thì Bob đã hoàn tất. Tumbler vốn dĩ là 1 vòng lặp while(1) 
 		// nên nó không tự thoát được. Ta dùng kill() để ép Tumbler thoát.
 		kill(tumbler, SIGINT);
+
+		printf("[WRAPPER] Mạng lưới kết thúc thành công!\n");
+		printf("===================\n");
 	} else {
 		// Nhánh code này chạy trong TIẾN TRÌNH CON BOB.
 		char *args[] = { "./bob", NULL };
