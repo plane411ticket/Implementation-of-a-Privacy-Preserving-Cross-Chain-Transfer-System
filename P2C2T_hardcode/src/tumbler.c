@@ -60,25 +60,30 @@ int handle_message(tumbler_state_t state, void *socket, zmq_msg_t message) {
   message_null(msg);
 
   RLC_TRY {
-    printf("Received message size: %ld bytes\n", zmq_msg_size(&message));
+    printf("[TUMBLER] Đã nhận tin nhắn %ld bytes\n", zmq_msg_size(&message));
+    printf("===================\n");
     deserialize_message(&msg, (uint8_t *) zmq_msg_data(&message));
 
-    printf("Executing %s...\n", msg->type);
+    printf("[TUMBLER] Đang thực thi %s...\n", msg->type);
+    printf("===================\n");
     msg_handler_t msg_handler = get_message_handler(msg->type);
     if (msg_handler(state, socket, msg->data) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
     if (strcmp(msg->type, "payment_vtd") == 0 || strcmp(msg->type, "payment_z") == 0) {
-        printf("\n[TUMBLER] Ket qua Adaptor Signature sau khi chay %s:\n", msg->type);
+        printf("\n[TUMBLER] Kết quả Adaptor Signature sau khi chạy %s:\n", msg->type);
+        printf("===================\n");
         if (state->sigma_r->r != NULL && state->sigma_r->s != NULL) {
             printf("r = "); bn_print(state->sigma_r->r);
             printf("s = "); bn_print(state->sigma_r->s);
         } else {
-            printf("(Luu y: Bien r hoac s chua duoc khoi tao trong state)\n");
+            printf("[TUMBLER] (Lưu ý: Biến r hoặc s chưa được khởi tạo trong state)\n");
+            printf("===================\n");
         }
         printf("--------------------------------------------------\n");
     }
-    printf("Finished executing %s.\n\n", msg->type);
+    printf("[TUMBLER] Hoàn thành thực thi %s.\n\n", msg->type);
+    printf("===================\n");
   } RLC_CATCH_ANY {
     result_status = RLC_ERR;
   } RLC_FINALLY {
@@ -115,8 +120,12 @@ int receive_message(tumbler_state_t state, void *socket) {
 
 int registration_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[TUMBLER:registration_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[TUMBLER:registration_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
@@ -371,8 +380,12 @@ int registration_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
 int registration_tid_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[TUMBLER:registration_tid_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[TUMBLER:registration_tid_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
 
@@ -450,8 +463,12 @@ int registration_tid_handler(tumbler_state_t state, void *socket, uint8_t *data)
 
 int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[TUMBLER:promise_init_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[TUMBLER:promise_init_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
 
@@ -813,8 +830,12 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
 int promise_zkdl_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[TUMBLER:promise_zkdl_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[TUMBLER:promise_zkdl_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
 
@@ -990,8 +1011,12 @@ int promise_zkdl_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
 int promise_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[TUMBLER:promise_presig_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[TUMBLER:promise_presig_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
 
@@ -1113,8 +1138,12 @@ int promise_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
 int payment_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[TUMBLER:payment_init_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[TUMBLER:payment_init_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
 
@@ -1247,8 +1276,12 @@ int payment_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
 int payment_decom_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[TUMBLER:payment_decom_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[TUMBLER:payment_decom_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
@@ -1431,8 +1464,12 @@ int payment_decom_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
 int payment_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[TUMBLER:payment_presig_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[TUMBLER:payment_presig_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
   message_t payment_sig_msg;
@@ -1531,10 +1568,12 @@ int main(void)
   init();
   if (core_init() != RLC_OK) 
   {
-    printf("Lỗi: Không thể thiết lập tham số đường cong Elliptic!\n");
+    fprintf(stderr, "[TUMBLER] Lỗi: Không thể thiết lập tham số đường cong Elliptic!\n");
+    fprintf(stderr, "===================\n");
     exit(1);
   }
-  printf("Khởi tạo đường cong Elliptic thành công!\n");
+  printf("[TUMBLER] Khởi tạo đường cong Elliptic thành công!\n");
+  printf("===================\n");
   int result_status = RLC_OK;
   bn_t q;
   bn_t r, s;
@@ -1548,19 +1587,22 @@ int main(void)
   // Bind the socket to talk to clients.
   void *context = zmq_ctx_new();
   if (!context) {
-    fprintf(stderr, "Error: could not create a context.\n");
+    fprintf(stderr, "[TUMBLER] Error: could not create a context.\n");
+    fprintf(stderr, "===================\n");
     exit(1);
   }
   
   void *socket = zmq_socket(context, ZMQ_REP);
   if (!socket) {
-    fprintf(stderr, "Error: could not create a socket.\n");
+    fprintf(stderr, "[TUMBLER] Error: could not create a socket.\n");
+    fprintf(stderr, "===================\n");
     exit(1);
   }
 
   int rc = zmq_bind(socket, TUMBLER_ENDPOINT);
   if (rc != 0) {
-    fprintf(stderr, "Error: could not bind the socket.\n");
+    fprintf(stderr, "[TUMBLER] Error: could not bind the socket.\n");
+    fprintf(stderr, "===================\n");
     exit(1);
   }
 
@@ -1573,8 +1615,9 @@ int main(void)
     bn_new(s);
     
     //ep_curve_get_ord(q);
-    printf("Gia tri q hien tai: ");
+    printf("[TUMBLER] Giá trị q hiện tại: ");
     bn_print(q);
+    printf("===================\n");
     if (bn_is_zero(q)) {
              
              ep_param_set(SECG_K256); 
@@ -1604,15 +1647,18 @@ int main(void)
     **/
 
     bn_read_str(state->tumbler_ec_sk->sk, "AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991", strlen("AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991"), 16);
-    printf("**sk_h1:\n");
+    printf("[TUMBLER] **sk_h1:\n");
     bn_print(state->tumbler_ec_sk->sk);
-    printf("Kiem tra Order q: ");
+    printf("===================\n");
+    printf("[TUMBLER] Kiểm tra Order q: ");
     bn_print(q); 
+    printf("===================\n");
     ec_mul_gen(state->tumbler_ec_pk->pk, state->tumbler_ec_sk->sk);
     
     bn_read_str(state->tumbler_ec_sk2->sk, "DBC8B40E03E646C69814D43D87D8632AC79031B31793DB58073F2249C11698CF", strlen("DBC8B40E03E646C69814D43D87D8632AC79031B31793DB58073F2249C11698CF"), 16);
-    printf("**sk_h2:\n");
+    printf("[TUMBLER] **sk_h2:\n");
     bn_print(state->tumbler_ec_sk2->sk); 
+    printf("===================\n");
     ec_mul_gen(state->tumbler_ec_pk2->pk, state->tumbler_ec_sk2->sk);
 
 // Tumbler is always on-line
