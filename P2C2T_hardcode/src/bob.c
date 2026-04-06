@@ -145,7 +145,6 @@ int promise_init(bob_state_t state, void *socket) {
   }
   printf("[BOB:promise_init] Đã bắt đầu thực thi...\n");
   printf("===================\n");
-
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
   size_t v_bytes;  
@@ -248,7 +247,9 @@ int promise_init(bob_state_t state, void *socket) {
 
     if (pi_lhtlp_range_gen(lhtlp_ranges, puzzles, state->lhtlp_param, sk_shares, rands, BITS_STATISTIC_PARAM, N_2, interval_L) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
-    }      
+    } 
+    
+       
     // Compute CL encryption secret/public key pair for the bob.
 	state->bob_cl_sk->sk = randomi(state->cl_params->bound);  // hoặc strtoi nhỏ để test
 
@@ -257,10 +258,22 @@ int promise_init(bob_state_t state, void *socket) {
 	state->cl_params->g_q, state->bob_cl_sk->sk, state->cl_params->q);
 
 	// Powering: truyền NULL cho mod để dùng đúng cho Qfb
-	state->bob_cl_pk->pk = nupow(state->cl_params->g_q, state->bob_cl_sk->sk, NULL);
+	
+	printf("[BOB:promise_init] Chuan bi goi nupow(g_q, sk, NULL)...\n");
+	
+	printf("[BOB:promise_init] Chuan bi goi nupow(g_q, sk, NULL)...\n");
+	state->bob_cl_pk->pk = nupow(state->cl_params->g_q, state->bob_cl_sk->sk, NULL); 
+	printf("[BOB:promise_init] Da goi nupow thanh cong.\n");
+
+	printf("[BOB:promise_init] Da goi nupow thanh cong.\n");
+
 
 	// Reduce form (rất nên, để pk gọn và chuẩn canonical trong CL)
+	
+	printf("[BOB:promise_init] Chuan bi goi qfbred()...\n");
 	state->bob_cl_pk->pk = qfbred(state->bob_cl_pk->pk);
+	printf("[BOB:promise_init] Da goi qfbred thanh cong.\n");
+
 
 	// Debug kết quả pk
 	pari_printf("Debug: pk = %Ps\n", state->bob_cl_pk->pk);
@@ -657,7 +670,7 @@ int promise_decom_handler(bob_state_t state, void *socket, uint8_t *data) {
       RLC_THROW(ERR_CAUGHT);
     }
     
-    // Decrypt the ciphertext.
+
     GEN s_hat_from_t;
     if (cl_dec(&s_hat_from_t, ctx_s_hat, state->bob_cl_sk, state->cl_params) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
@@ -962,7 +975,18 @@ int puzzle_solution_share_handler(bob_state_t state, void *socet, uint8_t *data)
 
 int main(void)
 {
-  init();
+  // init();
+  // 1. Tính toán dung lượng Stack cần để parse các params lớn 
+    // Cơ bản: cấp 2MB cho overhead. Cộng thêm 1MB cho mỗi BITS_STATISTIC_PARAM loop.
+    size_t base_stack = 2000000; 
+    size_t stack_per_param = 1000000; 
+    size_t required_stack = base_stack + (BITS_STATISTIC_PARAM * stack_per_param);
+    
+    // Giới hạn max prime vừa phải, không cần thiết cho ZKDL lớn
+    size_t required_maxprime = 500000; 
+
+    // Mở hệ thống
+    init(required_stack, required_maxprime);
   int result_status = RLC_OK;
   PROMISE_COMPLETED = 0;
   PUZZLE_SHARED = 0;

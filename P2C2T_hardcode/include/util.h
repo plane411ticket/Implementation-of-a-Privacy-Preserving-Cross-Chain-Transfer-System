@@ -50,7 +50,9 @@
 static uint8_t tx[2] = { 116, 120 }; // "tx"
 
 // Khởi tạo và dọn dẹp hệ thống/thư viện (RELIC, PARI, vv.)
-int init();
+// int init();
+int init(size_t dynamic_pari_stack_size, size_t pari_max_prime);
+
 int clean();
 
 // Các hàm tiện ích dùng chung

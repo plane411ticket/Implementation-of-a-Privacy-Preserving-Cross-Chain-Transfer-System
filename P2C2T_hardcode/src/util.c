@@ -7,22 +7,11 @@
 #include "pari/pari.h"
 #include "types.h"
 #include "util.h"
-
-int init() {
-	if (core_init() != RLC_OK) {
-		core_clean();
-		return RLC_ERR;
-	}
-        
-        
-
-	// Initialize the pairing and elliptic curve groups.
-	//if (pc_param_set_any() != RLC_OK) {
-	//	core_clean();
-	//	return RLC_ERR;
-	//}
-
-	if (ep_param_set_any() != RLC_OK) {
+int init(size_t dynamic_pari_stack_size, size_t pari_max_prime) {
+    if (core_init() != RLC_OK) {
+        return RLC_ERR;
+    }
+    if (ep_param_set_any() != RLC_OK) {
 		fprintf(stderr, "Lỗi: Module EP chưa được khởi tạo đúng!\n");
 		core_clean();
 		return RLC_ERR;
@@ -35,13 +24,56 @@ int init() {
         	core_clean();
         	return RLC_ERR;
     	}
-        
-        //  Initialize the PARI stack (in bytes) and randomness.
-	pari_init(10368709120, 2);
-	setrand(getwalltime());
-	
-	return RLC_OK;
+
+    // Khởi tạo PARI Stack linh hoạt, chỉ lấy bộ nhớ thực sự cần
+    if (dynamic_pari_stack_size > 0) {
+        pari_init(dynamic_pari_stack_size, pari_max_prime);
+        setrand(getwalltime());
+    }
+
+    return RLC_OK;
 }
+// int init() {
+// 	if (core_init() != RLC_OK) {
+// 		core_clean();
+// 		return RLC_ERR;
+// 	}
+        
+        
+
+// 	// Initialize the pairing and elliptic curve groups.
+// 	//if (pc_param_set_any() != RLC_OK) {
+// 	//	core_clean();
+// 	//	return RLC_ERR;
+// 	//}
+
+// 	if (ep_param_set_any() != RLC_OK) {
+// 		fprintf(stderr, "Lỗi: Module EP chưa được khởi tạo đúng!\n");
+// 		core_clean();
+// 		return RLC_ERR;
+// 	}
+
+// 	// Set the secp256k1 curve, which is used in Bitcoin.
+// 	ep_param_set(SECG_K256);
+// 	if (ep_param_get == NULL) {
+//         	fprintf(stderr, "Lỗi: Không tìm thấy tham số cho SECG_K256!\n");
+//         	core_clean();
+//         	return RLC_ERR;
+//     	}
+        
+//     //     //  Initialize the PARI stack (in bytes) and randomness.
+// 	// pari_init(10368709120, 2);
+// 	// setrand(getwalltime());
+
+// 	// //  Initialize the PARI stack (in bytes) and randomness.
+//     //     pari_init(17179869184, 2); // 16GB cho stack PARI
+//     //     setrand(getwalltime());
+// 	pari_init(2000000000, 2);
+// 	setrand(getwalltime());
+
+	
+// 	return RLC_OK;
+// }
 
 int clean() {
 	pari_close();
@@ -518,10 +550,10 @@ int generate_cl_params(cl_params_t params) {
 		// Order of the secp256k1 elliptic curve group and the group G^q.
 		params->q = strtoi("115792089237316195423570985008687907852837564279074904382605163141518161494337");
 		//params->g_q = qfi(g_q_a, g_q_b, g_q_c);
-                params->g_q = cgetg(4, t_QFB);      // t_QFI là type quadratic form trong PARI
-                gel(params->g_q, 1) = g_q_a;        // a
-                gel(params->g_q, 2) = g_q_b;        // b
-                gel(params->g_q, 3) = g_q_c;
+                params->g_q = Qfb0(g_q_a, g_q_b, g_q_c); // cgetg(4, t_QFB) was wrong context      // t_QFI là type quadratic form trong PARI
+                //gel(params->g_q, 1) = g_q_a;        // a
+                //gel(params->g_q, 2) = g_q_b;        // b
+                //gel(params->g_q, 3) = g_q_c;
 
 		GEN A = strtoi("0");
 		GEN B = strtoi("7");

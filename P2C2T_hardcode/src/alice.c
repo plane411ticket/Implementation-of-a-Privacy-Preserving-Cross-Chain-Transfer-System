@@ -1255,7 +1255,18 @@ int puzzle_solution_share(alice_state_t state, void *socket) {
 
 int main(void)
 {
-  init();
+  // init();
+  // 1. Tính toán dung lượng Stack cần để parse các params lớn 
+    // Cơ bản: cấp 2MB cho overhead. Cộng thêm 1MB cho mỗi BITS_STATISTIC_PARAM loop.
+    size_t base_stack = 2000000; 
+    size_t stack_per_param = 1000000; 
+    size_t required_stack = base_stack + (BITS_STATISTIC_PARAM * stack_per_param);
+    
+    // Giới hạn max prime vừa phải, không cần thiết cho ZKDL lớn
+    size_t required_maxprime = 500000; 
+
+    // Mở hệ thống
+    init(required_stack, required_maxprime);
   int result_status = RLC_OK;
   REGISTRATION_COMPLETED = 0;
   PUZZLE_SHARED = 0;

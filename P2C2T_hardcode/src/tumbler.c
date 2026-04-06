@@ -1572,7 +1572,18 @@ int payment_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
 int main(void)
 {
-  init();
+  // init();
+  // 1. Tính toán dung lượng Stack cần để parse các params lớn 
+    // Cơ bản: cấp 2MB cho overhead. Cộng thêm 1MB cho mỗi BITS_STATISTIC_PARAM loop.
+    size_t base_stack = 2000000; 
+    size_t stack_per_param = 1000000; 
+    size_t required_stack = base_stack + (BITS_STATISTIC_PARAM * stack_per_param);
+    
+    // Giới hạn max prime vừa phải, không cần thiết cho ZKDL lớn
+    size_t required_maxprime = 500000; 
+
+    // Mở hệ thống
+    init(required_stack, required_maxprime);
   if (core_init() != RLC_OK) 
   {
     fprintf(stderr, "[TUMBLER] Lỗi: Không thể thiết lập tham số đường cong Elliptic!\n");
