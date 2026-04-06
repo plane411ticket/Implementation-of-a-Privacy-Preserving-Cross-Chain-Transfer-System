@@ -1,6 +1,14 @@
 #ifndef P2C2T_ECDSA_INCLUDE_ALICE
 #define P2C2T_ECDSA_INCLUDE_ALICE
 
+/**
+ * @file alice.h
+ * @brief Định nghĩa các hằng số, trạng thái và hàm xử lý của bên Alice (người gửi).
+ * 
+ * Alice khởi tạo các cam kết giao dịch (commitments), chia sẻ puzzle và 
+ * chịu trách nhiệm ký kết các giao dịch chuyển tiền (payment). 
+ */
+
 #include <stddef.h>
 #include <string.h>
 #include "relic/relic.h"

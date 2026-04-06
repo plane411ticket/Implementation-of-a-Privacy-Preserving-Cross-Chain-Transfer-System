@@ -37,7 +37,7 @@ int init() {
     	}
         
         //  Initialize the PARI stack (in bytes) and randomness.
-	pari_init(1000000000, 2);
+	pari_init(10368709120, 2);
 	setrand(getwalltime());
 	
 	return RLC_OK;

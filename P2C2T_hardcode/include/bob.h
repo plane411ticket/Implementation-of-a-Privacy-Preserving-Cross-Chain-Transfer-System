@@ -1,6 +1,14 @@
 #ifndef P2C2T_ECDSA_INCLUDE_BOB
 #define P2C2T_ECDSA_INCLUDE_BOB
 
+/**
+ * @file bob.h
+ * @brief Định nghĩa các hằng số, trạng thái và hàm xử lý của bên Bob (người nhận).
+ * 
+ * Bob nhận tin nhắn từ Alice thông qua Tumbler, xác minh tính đúng đắn của các 
+ * mã thông báo (token) và tiến hành rút tiền (phân giải 퍼zle).
+ */
+
 #include <stddef.h>
 #include <string.h>
 #include "relic/relic.h"

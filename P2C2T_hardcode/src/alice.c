@@ -12,6 +12,17 @@ unsigned REGISTRATION_COMPLETED;
 unsigned PUZZLE_SHARED;
 unsigned PUZZLE_SOLVED;
 
+/*
+ * Hàm: get_message_type
+ * Mục đích: Map từ khóa dạng chuỗi của tin nhắn lấy được thành một mã integer đã định nghĩa
+ *           để dễ dàng sử dụng cho cấu trúc rẽ nhánh (switch-case).
+ *
+ * Tham số:
+ * - key: Chuỗi định danh của tin nhắn cần tra.
+ *
+ * Giá trị trả về:
+ * - integer code tương ứng với tin nhắn, hoặc -1 nếu không tìm thấy.
+ */
 int get_message_type(char *key) {
   for (size_t i = 0; i < TOTAL_MESSAGES; i++) {
     symstruct_t sym = msg_lookuptable[i];
@@ -22,6 +33,17 @@ int get_message_type(char *key) {
   return -1;
 }
 
+/*
+ * Hàm: get_message_handler
+ * Mục đích: Cung cấp con trỏ hàm xử lý thích hợp dựa vào chuỗi mã nhận dạng
+ *           của tin nhắn gửi đến Alice.
+ *
+ * Tham số:
+ * - key: Chuỗi định danh tin nhắn.
+ *
+ * Giá trị trả về:
+ * - msg_handler_t (con trỏ hàm xử lý logic tương ứng). Exit(1) nếu sai loại.
+ */
 msg_handler_t get_message_handler(char *key) {
   switch (get_message_type(key))
   {
@@ -49,6 +71,19 @@ msg_handler_t get_message_handler(char *key) {
   }
 }
 
+/*
+ * Hàm: handle_message
+ * Mục đích: Nhận, giải mã và phân phối gói tin ZMQ tới cho hàm xử lý tương ứng
+ *           trong tập hợp logic của mạng lưới P2C2T cho Alice. Đo lường kích thước.
+ *
+ * Tham số:
+ * - state: Trạng thái hiện tại của Alice (chứa key, params, trạng thái protocol...).
+ * - socket: Con trỏ tới socket ZMQ đang nhận tin.
+ * - message: Dữ liệu raw của gói tin ZMQ đã bắt vào.
+ *
+ * Giá trị trả về:
+ * - int: Mã lỗi RELIC (RLC_OK / RLC_ERR).
+ */
 int handle_message(alice_state_t state, void *socket, zmq_msg_t message) {
   int result_status = RLC_OK;
 
@@ -74,6 +109,18 @@ int handle_message(alice_state_t state, void *socket, zmq_msg_t message) {
   return result_status;
 }
 
+/*
+ * Hàm: receive_message
+ * Mục đích: Vòng lặp chờ đợi ZMQ (không khoá - DONTWAIT) để lấy tin nhắn kế tiếp
+ *           khỏi đường truyền, khởi tạo wrapper ZMQ rồi đưa cho `handle_message`.
+ *
+ * Tham số:
+ * - state: Trạng thái hiện tại của Alice.
+ * - socket: ZMQ socket.
+ *
+ * Giá trị trả về:
+ * - int: RLC_OK hoặc RLC_ERR.
+ */
 int receive_message(alice_state_t state, void *socket) {
   int result_status = RLC_OK;
 
@@ -99,47 +146,79 @@ int receive_message(alice_state_t state, void *socket) {
   return result_status;
 }
 
+/*
+ * Hàm: registration
+ * Mục đích: Bắt đầu tiến trình đăng ký của Alice với Tumbler. Gửi gói tin
+ *           `registration_z` kèm Alice's compressed EC public key cho đối tác.
+ *
+ * Tham số:
+ * - state: Trạng thái hiện tại chứa EC pk của Alice.
+ * - socket: ZMQ socket hướng đến Tumbler.
+ *
+ * Giá trị trả về:
+ * - int: RLC_OK hoặc RLC_ERR nếu thất bại khi serialize / gởi.
+ */
 int registration(alice_state_t state, void *socket) {
+  // Kiểm tra đầu vào, nếu state NULL thì ném lỗi
   if (state == NULL) {
     RLC_THROW(ERR_NO_VALID);
   }
 
-  int result_status = RLC_OK;
+  int result_status = RLC_OK; // Biến lưu trạng thái kết quả trả về của hàm
 
-  uint8_t *serialized_message = NULL;
-  message_t registration_msg;
+  uint8_t *serialized_message = NULL; // Con trỏ lưu trữ mảng byte của tin nhắn sau khi được serialize
+  message_t registration_msg; // Cấu trúc tin nhắn dùng để chứa loại (type) và dữ liệu (data)
 
   RLC_TRY {   
 
-    // Build and define the message.
+    // Tên tin nhắn (type) là "registration_z"
     char *msg_type = "registration_z";
+    // Tính toán chiều dài tên tin nhắn (bao gồm ký tự '\0')
     const unsigned msg_type_length = (unsigned) strlen(msg_type) + 1;
+    // Dữ liệu mã hóa sẽ có kích thước bằng với Public Key EC chuẩn (compressed size)
     const unsigned msg_data_length = RLC_EC_SIZE_COMPRESSED;
+    // Tổng chiều dài gói tin: loại + dữ liệu + hai giá trị metadata kiểu unsigned kích thước
     const int total_msg_length = msg_type_length + msg_data_length + (2 * sizeof(unsigned));
+    
+    // Khởi tạo cấu trúc tin nhắn cục bộ
     message_new(registration_msg, msg_type_length, msg_data_length);
+    
+    // Nén (compress) Public Key (pk) hệ Elliptic Curve của Alice thành dạng nhị phân,
+    // và ghi nó vào phần .data của gói tin
     ec_write_bin(registration_msg->data, RLC_EC_SIZE_COMPRESSED, state->alice_ec_pk->pk, 1);
-    // Serialize the message.
+    
+    // Copy chuỗi tên "registration_z" vào phần .type của gói tin
     memcpy(registration_msg->type, msg_type, msg_type_length);
+    
+    // Nối và biến đổi toàn bộ metadata struct thành một mảng byte thuần (serialize)
+    // để chuẩn bị gửi qua socket
     serialize_message(&serialized_message, registration_msg, msg_type_length, msg_data_length);
 
-    // Send the message.
+    // Bắt đầu quá trình ZMQ message passing
     zmq_msg_t registration_z;
+    // Cấp phát vùng nhớ cho gói ZMQ với đúng kích thước vừa tính
     int rc = zmq_msg_init_size(&registration_z, total_msg_length);
     if (rc < 0) {
       fprintf(stderr, "Error: could not initialize the message (%s).\n", msg_type);
       RLC_THROW(ERR_CAUGHT);
     }
 
+    // Sao chép mảng serialized_message vào payload data của ZMQ msg
     memcpy(zmq_msg_data(&registration_z), serialized_message, total_msg_length);
+    
+    // Gửi bất đồng bộ (không chờ - ZMQ_DONTWAIT) qua socket (truyền đến Tumbler)
     rc = zmq_msg_send(&registration_z, socket, ZMQ_DONTWAIT);
+    
+    // Nếu kích thước bytes gửi thành công không khớp kích thước khai báo, báo lỗi
     if (rc != total_msg_length) {
       fprintf(stderr, "Error: could not send the message (%s).\n", msg_type);
       RLC_THROW(ERR_CAUGHT);
     }
   
   } RLC_CATCH_ANY {
-    result_status = RLC_ERR;
+    result_status = RLC_ERR; // Bắt exceptions tử bất kì hàm lõi nào để trả RLC_ERR
   } RLC_FINALLY {
+    // Dọn dẹp con trỏ bộ nhớ động để tránh rò rỉ (memory leak) kể cả khi chương trình try lỗi hay thành công
     if (registration_msg != NULL) message_free(registration_msg);
     if (serialized_message != NULL) free(serialized_message);
   }
