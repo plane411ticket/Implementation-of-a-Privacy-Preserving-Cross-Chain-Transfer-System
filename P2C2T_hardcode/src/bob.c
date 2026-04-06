@@ -60,14 +60,20 @@ int handle_message(bob_state_t state, void *socket, zmq_msg_t message) {
 
   RLC_TRY {
     printf("Received message size: %ld bytes\n", zmq_msg_size(&message));
+    printf("[BOB] Đã nhận tin nhắn %ld bytes\n", zmq_msg_size(&message));
+    printf("===================\n");
     deserialize_message(&msg, (uint8_t *) zmq_msg_data(&message));
 
     printf("Executing %s...\n", msg->type);
+    printf("[BOB] Đang thực thi %s...\n", msg->type);
+    printf("===================\n");
     msg_handler_t msg_handler = get_message_handler(msg->type);
     if (msg_handler(state, socket, msg->data) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
     printf("Finished executing %s.\n\n", msg->type);
+    printf("[BOB] Hoàn thành thực thi %s.\n\n", msg->type);
+    printf("===================\n");
   } RLC_CATCH_ANY {
     result_status = RLC_ERR;
   } RLC_FINALLY {
@@ -104,8 +110,12 @@ int receive_message(bob_state_t state, void *socket) {
 
 int token_share_handler(bob_state_t state, void *socet, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:token_share_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:token_share_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
 
@@ -129,8 +139,12 @@ int token_share_handler(bob_state_t state, void *socet, uint8_t *data) {
 
 int promise_init(bob_state_t state, void *socket) {
   if (state == NULL) {
+    fprintf(stderr, "[BOB:promise_init] Lỗi: state bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:promise_init] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
@@ -405,8 +419,12 @@ int promise_init(bob_state_t state, void *socket) {
 
 int promise_com_handler(bob_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:promise_com_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:promise_com_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
@@ -536,8 +554,12 @@ int promise_com_handler(bob_state_t state, void *socket, uint8_t *data) {
 
 int promise_decom_handler(bob_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:promise_decom_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:promise_decom_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
@@ -730,8 +752,13 @@ int promise_decom_handler(bob_state_t state, void *socket, uint8_t *data) {
 
 int promise_over_handler(bob_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:promise_over_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:promise_over_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
+
   PROMISE_COMPLETED = 1;
 
   return RLC_OK;
@@ -739,8 +766,12 @@ int promise_over_handler(bob_state_t state, void *socket, uint8_t *data) {
 
 int puzzle_share(bob_state_t state, void *socket) {
   if (state == NULL) {
+    fprintf(stderr, "[BOB:puzzle_share] Lỗi: state bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:puzzle_share] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
   
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
@@ -832,8 +863,12 @@ int puzzle_share(bob_state_t state, void *socket) {
 
 int puzzle_share_done_handler(bob_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:puzzle_share_done_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:puzzle_share_done_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   PUZZLE_SHARED = 1;
   return RLC_OK;
@@ -841,8 +876,12 @@ int puzzle_share_done_handler(bob_state_t state, void *socket, uint8_t *data) {
 
 int puzzle_solution_share_handler(bob_state_t state, void *socet, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:puzzle_solution_share_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:puzzle_solution_share_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
 

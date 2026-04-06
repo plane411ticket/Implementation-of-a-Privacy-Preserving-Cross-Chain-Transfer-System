@@ -878,6 +878,8 @@ int pedersen_commit(pedersen_com_t com,
 
 	bn_t q;
 	bn_null(q);
+	// bn_null(r);
+	bn_t r;
 	bn_null(r);
 
 	g1_t g1_gen, g1_to_the_r;
@@ -1146,13 +1148,15 @@ int zk_cldl_prove(zk_proof_cldl_t proof,
 									const cl_params_t params) {
 	int result_status = RLC_OK;
 
-	bn_t rlc_k, rlc_r2, rlc_soundness;
+	bn_t rlc_k,k, rlc_r2, rlc_soundness;
 	bn_null(rlc_k);
+	bn_null(k);
 	bn_null(rlc_r2);
 	bn_null(rlc_soundness);
 
 	RLC_TRY {
 		bn_new(rlc_k);
+		bn_new(k);
 		bn_new(rlc_r2);
 		bn_new(rlc_soundness);
 

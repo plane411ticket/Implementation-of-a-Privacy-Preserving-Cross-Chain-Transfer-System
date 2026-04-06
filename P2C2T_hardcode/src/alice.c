@@ -91,19 +91,52 @@ int handle_message(alice_state_t state, void *socket, zmq_msg_t message) {
   message_null(msg);
 
   RLC_TRY {
-    printf("Received message size: %ld bytes\n", zmq_msg_size(&message));
-    deserialize_message(&msg, (uint8_t *) zmq_msg_data(&message));
+    size_t msg_size = zmq_msg_size(&message);
+    printf("[DEBUG] --- New Message Received ---\n");
+    printf("[DEBUG] Size: %zu bytes\n", msg_size);
 
-    printf("Executing %s...\n", msg->type);
-    msg_handler_t msg_handler = get_message_handler(msg->type);
-    if (msg_handler(state, socket, msg->data) != RLC_OK) {
+    // Giải mã tin nhắn
+    deserialize_message(&msg, (uint8_t *) zmq_msg_data(&message));
+    
+    if (msg == NULL) {
+      printf("[ERROR] Deserialization failed: msg is NULL\n");
       RLC_THROW(ERR_CAUGHT);
     }
-    printf("Finished executing %s.\n\n", msg->type);
+
+    if (msg->type == NULL) {
+      printf("[ERROR] Message type is missing!\n");
+      RLC_THROW(ERR_CAUGHT);
+    }
+
+    printf("[DEBUG] Message Type: %s\n", msg->type);
+
+    // Lấy hàm xử lý tương ứng
+    msg_handler_t msg_handler = get_message_handler(msg->type);
+    
+    if (msg_handler == NULL) {
+      printf("[ERROR] No handler found for type: %s\n", msg->type);
+      RLC_THROW(ERR_CAUGHT);
+    }
+
+    // Thực thi handler
+    printf("[DEBUG] Executing handler...\n");
+    if (msg_handler(state, socket, msg->data) != RLC_OK) {
+      printf("[ERROR] Handler for '%s' failed (RLC_ERR).\n", msg->type);
+      RLC_THROW(ERR_CAUGHT);
+    }
+    
+    printf("[DEBUG] Successfully finished executing: %s\n\n", msg->type);
+
   } RLC_CATCH_ANY {
+    printf("[FATAL] Exception caught in handle_message!\n");
     result_status = RLC_ERR;
   } RLC_FINALLY {
-    if (msg != NULL) message_free(msg);
+    // Luôn dọn dẹp tài nguyên
+    if (msg != NULL) {
+      message_free(msg);
+      printf("[DEBUG] Resources cleaned: message_free(msg) called.\n");
+    }
+    printf("[DEBUG] --- End of handle_message ---\n\n");
   }
 
   return result_status;
@@ -127,20 +160,44 @@ int receive_message(alice_state_t state, void *socket) {
   zmq_msg_t message;
 
   RLC_TRY {
+    // 1. Khởi tạo message
     int rc = zmq_msg_init(&message);
     if (rc != 0) {
-      fprintf(stderr, "Error: could not initialize the message.\n");
+      fprintf(stderr, "[ERROR] Could not initialize zmq_msg_t. errno: %d\n", errno);
       RLC_THROW(ERR_CAUGHT);
     }
 
+    // 2. Nhận message (Sử dụng ZMQ_DONTWAIT nên cần check EAGAIN)
     rc = zmq_msg_recv(&message, socket, ZMQ_DONTWAIT);
-    if (rc != -1 && handle_message(state, socket, message) != RLC_OK) {
-      RLC_THROW(ERR_CAUGHT);
+    
+    if (rc == -1) {
+      if (errno == EAGAIN) {
+        // Đây là trường hợp bình thường khi không có tin nhắn nào trong queue
+        // printf("[DEBUG] No message available (EAGAIN).\n"); 
+      } else {
+        fprintf(stderr, "[ERROR] zmq_msg_recv failed with errno: %d\n", errno);
+        RLC_THROW(ERR_CAUGHT);
+      }
+    } else {
+      // Nhận tin nhắn thành công
+      printf("[DEBUG] Message received successfully. Raw size: %d bytes\n", rc);
+
+      // 3. Xử lý tin nhắn
+      if (handle_message(state, socket, message) != RLC_OK) {
+        printf("[ERROR] handle_message returned an error status.\n");
+        RLC_THROW(ERR_CAUGHT);
+      }
+      
+      printf("[DEBUG] Message handled and finished.\n");
     }
+
   } RLC_CATCH_ANY {
+    printf("[FATAL] Exception caught in receive_message!\n");
     result_status = RLC_ERR;
   } RLC_FINALLY {
+    // Luôn đóng message để tránh rò rỉ bộ nhớ
     zmq_msg_close(&message);
+    // printf("[DEBUG] zmq_msg_close called.\n");
   }
 
   return result_status;
@@ -339,6 +396,7 @@ int registration_vtd_handler(alice_state_t state, void *socket, uint8_t *data) {
     // Deserialize the data from the message.
     for(int i = 0; i <BITS_STATISTIC_PARAM; i++)
     {      
+      printf("[ALICE] Doc puzzles[%d]->u\n", i);
       bn_read_bin(puzzles[i]->u, data  + (i * BYTES_MODULUS_RSA)  + (i * BYTES_MODULUS_RSA_2), BYTES_MODULUS_RSA);
       mpz_import(puzzles[i]->v, BYTES_MODULUS_RSA_2, 1, sizeof(unsigned char), 0, 0, data  + ((i+1) * BYTES_MODULUS_RSA)+ (i * BYTES_MODULUS_RSA_2));
     }

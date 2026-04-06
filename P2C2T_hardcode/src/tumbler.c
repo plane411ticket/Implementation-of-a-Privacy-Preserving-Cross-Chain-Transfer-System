@@ -60,10 +60,12 @@ int handle_message(tumbler_state_t state, void *socket, zmq_msg_t message) {
   message_null(msg);
 
   RLC_TRY {
+    printf("Received message size: %ld bytes\n", zmq_msg_size(&message));
     printf("[TUMBLER] Đã nhận tin nhắn %ld bytes\n", zmq_msg_size(&message));
     printf("===================\n");
     deserialize_message(&msg, (uint8_t *) zmq_msg_data(&message));
 
+    printf("Executing %s...\n", msg->type);
     printf("[TUMBLER] Đang thực thi %s...\n", msg->type);
     printf("===================\n");
     msg_handler_t msg_handler = get_message_handler(msg->type);
@@ -71,17 +73,20 @@ int handle_message(tumbler_state_t state, void *socket, zmq_msg_t message) {
       RLC_THROW(ERR_CAUGHT);
     }
     if (strcmp(msg->type, "payment_vtd") == 0 || strcmp(msg->type, "payment_z") == 0) {
+        printf("\nKet qua Adaptor Signature sau khi chay %s:\n", msg->type);
         printf("\n[TUMBLER] Kết quả Adaptor Signature sau khi chạy %s:\n", msg->type);
         printf("===================\n");
         if (state->sigma_r->r != NULL && state->sigma_r->s != NULL) {
             printf("r = "); bn_print(state->sigma_r->r);
             printf("s = "); bn_print(state->sigma_r->s);
         } else {
+            printf("(Luu y: Bien r hoac s chua duoc khoi tao trong state)\n");
             printf("[TUMBLER] (Lưu ý: Biến r hoặc s chưa được khởi tạo trong state)\n");
             printf("===================\n");
         }
         printf("--------------------------------------------------\n");
     }
+    printf("Finished executing %s.\n\n", msg->type);
     printf("[TUMBLER] Hoàn thành thực thi %s.\n\n", msg->type);
     printf("===================\n");
   } RLC_CATCH_ANY {
@@ -1311,6 +1316,8 @@ int payment_decom_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   bn_null(mul_hash);
   bn_null(mul_sk);
   bn_null(k_gamma);
+  // ec_null(decom_rand_from_t);
+  ec_t decom_rand_from_t;
   ec_null(decom_rand_from_t);
   ec_null(g_to_gamma);
   ec_null(g_to_gamma_k_from_t);
