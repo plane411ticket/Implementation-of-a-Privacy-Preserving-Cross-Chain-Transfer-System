@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/tumbler"
-  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/tumbler.pdb"
+  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/tumbler"
+  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/tumbler.pdb"
   "CMakeFiles/tumbler.dir/tumbler.c.o"
   "CMakeFiles/tumbler.dir/tumbler.c.o.d"
   "CMakeFiles/tumbler.dir/util.c.o"

@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/include -I/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/include
+C_INCLUDES = -I/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/include -I/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/include
 
 C_FLAGS =  -Wall -Wextra -Wno-unused-parameter -Wno-macro-redefined  -Wall -Wextra -Wno-unused-parameter -Wno-macro-redefined -O3 -Wno-clobbered -std=gnu11
 

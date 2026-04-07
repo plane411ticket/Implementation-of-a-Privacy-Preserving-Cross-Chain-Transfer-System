@@ -1,4 +1,4 @@
-# Install script for directory: /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src
+# Install script for directory: /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

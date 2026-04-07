@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nndd411/blockchain/ptoctot/P2C2T_hardcode
+CMAKE_SOURCE_DIR = /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build
+CMAKE_BINARY_DIR = /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build
 
 # Include any dependencies generated for this target.
 include src/CMakeFiles/alice.dir/depend.make
@@ -70,32 +70,32 @@ include src/CMakeFiles/alice.dir/progress.make
 include src/CMakeFiles/alice.dir/flags.make
 
 src/CMakeFiles/alice.dir/alice.c.o: src/CMakeFiles/alice.dir/flags.make
-src/CMakeFiles/alice.dir/alice.c.o: /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/alice.c
+src/CMakeFiles/alice.dir/alice.c.o: /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/alice.c
 src/CMakeFiles/alice.dir/alice.c.o: src/CMakeFiles/alice.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object src/CMakeFiles/alice.dir/alice.c.o"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/alice.dir/alice.c.o -MF CMakeFiles/alice.dir/alice.c.o.d -o CMakeFiles/alice.dir/alice.c.o -c /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/alice.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object src/CMakeFiles/alice.dir/alice.c.o"
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/alice.dir/alice.c.o -MF CMakeFiles/alice.dir/alice.c.o.d -o CMakeFiles/alice.dir/alice.c.o -c /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/alice.c
 
 src/CMakeFiles/alice.dir/alice.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/alice.dir/alice.c.i"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/alice.c > CMakeFiles/alice.dir/alice.c.i
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/alice.c > CMakeFiles/alice.dir/alice.c.i
 
 src/CMakeFiles/alice.dir/alice.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/alice.dir/alice.c.s"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/alice.c -o CMakeFiles/alice.dir/alice.c.s
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/alice.c -o CMakeFiles/alice.dir/alice.c.s
 
 src/CMakeFiles/alice.dir/util.c.o: src/CMakeFiles/alice.dir/flags.make
-src/CMakeFiles/alice.dir/util.c.o: /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c
+src/CMakeFiles/alice.dir/util.c.o: /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c
 src/CMakeFiles/alice.dir/util.c.o: src/CMakeFiles/alice.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object src/CMakeFiles/alice.dir/util.c.o"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/alice.dir/util.c.o -MF CMakeFiles/alice.dir/util.c.o.d -o CMakeFiles/alice.dir/util.c.o -c /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object src/CMakeFiles/alice.dir/util.c.o"
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/alice.dir/util.c.o -MF CMakeFiles/alice.dir/util.c.o.d -o CMakeFiles/alice.dir/util.c.o -c /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c
 
 src/CMakeFiles/alice.dir/util.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/alice.dir/util.c.i"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c > CMakeFiles/alice.dir/util.c.i
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c > CMakeFiles/alice.dir/util.c.i
 
 src/CMakeFiles/alice.dir/util.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/alice.dir/util.c.s"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c -o CMakeFiles/alice.dir/util.c.s
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c -o CMakeFiles/alice.dir/util.c.s
 
 # Object files for target alice
 alice_OBJECTS = \
@@ -105,26 +105,26 @@ alice_OBJECTS = \
 # External object files for target alice
 alice_EXTERNAL_OBJECTS =
 
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice: src/CMakeFiles/alice.dir/alice.c.o
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice: src/CMakeFiles/alice.dir/util.c.o
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice: src/CMakeFiles/alice.dir/build.make
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice: /usr/local/lib/librelic.so
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice: /usr/local/lib/libpari.so
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice: /usr/lib/x86_64-linux-gnu/libgmp.so
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice: /usr/lib/x86_64-linux-gnu/libzmq.so
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice: src/CMakeFiles/alice.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/alice.dir/link.txt --verbose=$(VERBOSE)
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice: src/CMakeFiles/alice.dir/alice.c.o
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice: src/CMakeFiles/alice.dir/util.c.o
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice: src/CMakeFiles/alice.dir/build.make
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice: /usr/local/lib/librelic.so
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice: /usr/local/lib/libpari.so
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice: /usr/lib/x86_64-linux-gnu/libgmp.so
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice: /usr/lib/x86_64-linux-gnu/libzmq.so
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice: src/CMakeFiles/alice.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice"
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/alice.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-src/CMakeFiles/alice.dir/build: /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/alice
+src/CMakeFiles/alice.dir/build: /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/alice
 .PHONY : src/CMakeFiles/alice.dir/build
 
 src/CMakeFiles/alice.dir/clean:
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && $(CMAKE_COMMAND) -P CMakeFiles/alice.dir/cmake_clean.cmake
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && $(CMAKE_COMMAND) -P CMakeFiles/alice.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/alice.dir/clean
 
 src/CMakeFiles/alice.dir/depend:
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nndd411/blockchain/ptoctot/P2C2T_hardcode /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src/CMakeFiles/alice.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src/CMakeFiles/alice.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : src/CMakeFiles/alice.dir/depend
 
