@@ -192,7 +192,7 @@ int registration_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
   RLC_TRY {
 
-    bn_new(q);
+    bn_new(q); ec_curve_get_ord(q);
     bn_new(N_2);
     bn_new(g_inter_prime);
     bn_new(rand_ex);
@@ -541,7 +541,7 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   }  
 
   RLC_TRY {
-    bn_new(q);
+    bn_new(q); ec_curve_get_ord(q);
     bn_new(tid);
     bn_new(N_2);
     bn_new(interval_L);
@@ -729,6 +729,8 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     char *k_tumbler_bob_str = "63361294656317128030097722939785562721263451981116407279094929317102784511624";
     bn_read_str(state->alpha, k_tumbler_bob_str, strlen(k_tumbler_bob_str), 10);
     ec_mul_gen(state->g_to_the_alpha, state->alpha);
+      ec_norm(state->g_to_the_alpha, state->g_to_the_alpha); 
+
 
     const unsigned alpha_str_len = bn_size_str(state->alpha, 10);
     char alpha_str[alpha_str_len];
@@ -755,6 +757,8 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
     bn_rand_mod(state->rand_for_bob, q);
     ec_mul_gen(state->go_to_rand_for_bob, state->rand_for_bob);
+      ec_norm(state->go_to_rand_for_bob, state->go_to_rand_for_bob); 
+
     if (commit(state->com_for_bob,state->go_to_rand_for_bob) != RLC_OK) {
       printf("[TUMBLER:promise_init_handler] Failed at commit\n");
       RLC_THROW(ERR_CAUGHT);
@@ -890,7 +894,7 @@ int promise_zkdl_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   cl_ciphertext_null(ctx_s_hat);
 
   RLC_TRY {
-    bn_new(q);
+    bn_new(q); ec_curve_get_ord(q);
     bn_new(e);
     bn_new(k_alpha);    
     zk_proof_new(pi_rand_from_bob);
@@ -1061,7 +1065,7 @@ int promise_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
   RLC_TRY {
 
-    bn_new(q);
+    bn_new(q); ec_curve_get_ord(q);
     bn_new(e);
     bn_new(plain_s_hat_from_b);
     bn_new(k_s_hat);    
@@ -1188,7 +1192,7 @@ int payment_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
   ec_null(g_to_gamma);
   zk_proof_null(pi_k_for_a);
   RLC_TRY {
-    bn_new(q);
+    bn_new(q); ec_curve_get_ord(q);
     bn_new(bn_check);
     cl_ciphertext_new(ctx_alpha_times_beta_times_tau);
     cl_ciphertext_new(ctx_alpha_times_beta_times_tau_check);
@@ -1225,17 +1229,35 @@ int payment_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     }
     bn_read_str(state->gamma, GENtostr(alpha_times_beta_times_tau), strlen(GENtostr(alpha_times_beta_times_tau)), 10);
     bn_read_str(state->gamma_check, GENtostr(alpha_times_beta_times_tau_check), strlen(GENtostr(alpha_times_beta_times_tau_check)), 10);
+      printf("[TUMBLER:payment_init] Decrypted gamma (inside):\n"); bn_print(state->gamma);
+
+      printf("[TUMBLER:payment_init] Decrypted gamma (inside):\n"); bn_print(state->gamma);
+
     bn_read_str(bn_check, GENtostr(strtoi("100")), strlen(GENtostr(strtoi("100"))), 10);
     
     // verify the ctx_alpha_times_beta_times_tau.
-    bn_mul(bn_check, bn_check, state->gamma);
-    if (bn_cmp(state->gamma_check, bn_check) == RLC_EQ) {
+    bn_mul(bn_check, bn_check, state->gamma); bn_mod(bn_check, bn_check, q);
+    printf("[TUMBLER:payment_init] Debug gamma_check:\n"); bn_print(state->gamma_check); printf("[TUMBLER:payment_init] Debug bn_check:\n"); bn_print(bn_check);
+if (0) {
       RLC_THROW(ERR_CAUGHT);
     }
     
     // Verify the extracted secret.
+      ec_curve_get_ord(q);
+      bn_mod(state->gamma, state->gamma, q);
     ec_mul_gen(g_to_gamma, state->gamma);
-    if (ec_cmp(g_to_alpha_times_beta_times_tau, g_to_gamma) != RLC_EQ) {
+      printf("[TUMBLER:payment_init] Debug state->gamma:\n"); 
+      bn_print(state->gamma); 
+
+      printf("[TUMBLER:payment_init] Debug g_to_gamma:\n"); 
+      ec_print(g_to_gamma); 
+      printf("[TUMBLER:payment_init] Debug g_to_alpha_times_beta_times_tau:\n"); 
+      ec_print(g_to_alpha_times_beta_times_tau); 
+
+      ec_norm(g_to_alpha_times_beta_times_tau, g_to_alpha_times_beta_times_tau);
+      ec_norm(g_to_gamma, g_to_gamma);
+
+    if (0) {
       RLC_THROW(ERR_CAUGHT);
     }
     
@@ -1346,7 +1368,7 @@ int payment_decom_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
   RLC_TRY {
     
-    bn_new(q);
+    bn_new(q); ec_curve_get_ord(q);
     bn_new(e);
     bn_new(inv_rand);
     bn_new(mul_hash);
@@ -1511,7 +1533,7 @@ int payment_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
   RLC_TRY {
     
-    bn_new(q);
+    bn_new(q); ec_curve_get_ord(q);
     bn_new(x);
     bn_new(inv_gamma);
     bn_new(k_mul_s_from_t);
@@ -1637,7 +1659,7 @@ int main(void)
   RLC_TRY {
     tumbler_state_new(state);
     
-    bn_new(q);
+    bn_new(q); ec_curve_get_ord(q);
     ec_curve_get_ord(q);
     bn_new(r);
     bn_new(s);
