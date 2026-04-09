@@ -1386,7 +1386,7 @@ int payment_decom_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     bn_read_str(e, "baedc1f131c96c320bb8b2cf852b67526ab4af9c1dccc48b88482f38416de700", 64, 16);
     printf("\nGia tri e da nhap vao Alice: ");
     bn_print(e);
-    bn_new(state->com_c_from_a);
+    // bn_new(state->com_c_from_a);
 
     ec_read_bin(state->g_to_rand_from_a, data, RLC_EC_SIZE_COMPRESSED);
     ec_read_bin(pi_g_to_k_from_a->a, data + RLC_EC_SIZE_COMPRESSED, RLC_EC_SIZE_COMPRESSED);
