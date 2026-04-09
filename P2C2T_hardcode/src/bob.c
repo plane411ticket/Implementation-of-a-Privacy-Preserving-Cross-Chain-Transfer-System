@@ -1069,7 +1069,7 @@ int main(void)
       if (receive_message(state, socket) != RLC_OK) {
         RLC_THROW(ERR_CAUGHT);
       }
-    }    
+    }
 
     rc = zmq_close(socket);
     if (rc != 0) {
