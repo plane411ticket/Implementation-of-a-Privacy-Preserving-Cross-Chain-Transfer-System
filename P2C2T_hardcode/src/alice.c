@@ -1310,8 +1310,9 @@ int main(void)
     if (generate_cl_params(state->cl_params) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-
-    /**
+    
+    
+    /*
     if (read_keys_from_file_alice_bob(ALICE_KEY_FILE_PREFIX,
                                       state->alice_ec_sk,
                                       state->alice_ec_pk,
@@ -1320,12 +1321,35 @@ int main(void)
                                       state->tumbler_cl_pk) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-    **/
+    */
+    
+    
 
     bn_read_str(state->alice_ec_sk->sk, "CC62414C758C52CE1A7B0ECE10BB8CAE753B63C1CEBD7F85A4FB57963B966462", strlen("CC62414C758C52CE1A7B0ECE10BB8CAE753B63C1CEBD7F85A4FB57963B966462"), 16);
+    bn_new(q);
+    ec_curve_get_ord(q);
+    bn_mod_basic(state->alice_ec_sk->sk, state->alice_ec_sk->sk, q);
     printf("**sk_s:\n");
     bn_print(state->alice_ec_sk->sk); 
     ec_mul_gen(state->alice_ec_pk->pk, state->alice_ec_sk->sk);
+
+    // Hardcode Tumbler keys in Alice
+    bn_t t_ec_sk; bn_null(t_ec_sk); bn_new(t_ec_sk);
+    bn_read_str(t_ec_sk, "AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991", strlen("AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991"), 16);
+    bn_mod_basic(t_ec_sk, t_ec_sk, q);
+    ec_mul_gen(state->tumbler_ec_pk->pk, t_ec_sk);
+    bn_free(t_ec_sk);
+
+    bn_t ps_x, ps_y; bn_null(ps_x); bn_new(ps_x); bn_null(ps_y); bn_new(ps_y);
+    bn_read_str(ps_x, "1234567890ABCDEF", 16, 16); bn_mod_basic(ps_x, ps_x, q);
+    bn_read_str(ps_y, "FEDCBA0987654321", 16, 16); bn_mod_basic(ps_y, ps_y, q);
+    g1_mul_gen(state->tumbler_ps_pk->Y_1, ps_y);
+    g2_mul_gen(state->tumbler_ps_pk->X_2, ps_x);
+    g2_mul_gen(state->tumbler_ps_pk->Y_2, ps_y);
+    bn_free(ps_x); bn_free(ps_y);
+
+    GEN cl_sk_t = strtoi("1234567890");
+    state->tumbler_cl_pk->pk = nupow(state->cl_params->g_q, cl_sk_t, NULL);
 
     start_time = ttimer();
     if (registration(state, socket) != RLC_OK) {

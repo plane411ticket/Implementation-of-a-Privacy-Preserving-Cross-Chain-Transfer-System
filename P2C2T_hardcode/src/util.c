@@ -11,19 +11,9 @@ int init(size_t dynamic_pari_stack_size, size_t pari_max_prime) {
     if (core_init() != RLC_OK) {
         return RLC_ERR;
     }
-    if (ep_param_set_any() != RLC_OK) {
-		fprintf(stderr, "Lỗi: Module EP chưa được khởi tạo đúng!\n");
-		core_clean();
-		return RLC_ERR;
-	}
-
-	// Set the secp256k1 curve, which is used in Bitcoin.
-	ep_param_set(SECG_K256);
-	if (ep_param_get == NULL) {
-        	fprintf(stderr, "Lỗi: Không tìm thấy tham số cho SECG_K256!\n");
-        	core_clean();
-        	return RLC_ERR;
-    	}
+    if (pc_param_set_any() != RLC_OK) {
+        return RLC_ERR;
+    }
 
     // Khởi tạo PARI Stack linh hoạt, chỉ lấy bộ nhớ thực sự cần
     if (dynamic_pari_stack_size > 0) {
@@ -835,7 +825,8 @@ int ps_unblind(ps_signature_t signature,
 
 		g1_get_ord(q);
 
-		bn_gcd_ext(x, r_inverse, NULL, decom->r, q);
+bn_neg(r_inverse, decom->r);
+                bn_mod_basic(r_inverse, r_inverse, q);
     if (bn_sign(r_inverse) == RLC_NEG) {
       bn_add(r_inverse, r_inverse, q);
     }

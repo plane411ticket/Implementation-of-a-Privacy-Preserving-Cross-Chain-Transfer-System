@@ -1022,7 +1022,9 @@ int main(void)
     if (generate_cl_params(state->cl_params) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-    /**
+    
+    
+    /*
     if (read_keys_from_file_alice_bob(BOB_KEY_FILE_PREFIX,
                                       state->bob_ec_sk,
                                       state->bob_ec_pk,
@@ -1031,11 +1033,36 @@ int main(void)
                                       state->tumbler_cl_pk) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-    **/
+    */
+    
+    
     bn_read_str(state->bob_ec_sk->sk, "D5428B52D9145EE5B51CEB5B1E0D382188E428BC79B45C2D034BA956BB84B316", strlen("D5428B52D9145EE5B51CEB5B1E0D382188E428BC79B45C2D034BA956BB84B316"), 16);
+    bn_t q;
+    bn_null(q);
+    bn_new(q);
+    ec_curve_get_ord(q);
+    bn_mod_basic(state->bob_ec_sk->sk, state->bob_ec_sk->sk, q);
     printf("**sk_r:\n");
     bn_print(state->bob_ec_sk->sk); 
     ec_mul_gen(state->bob_ec_pk->pk, state->bob_ec_sk->sk);
+
+    // Hardcode Tumbler keys in Bob
+    bn_t t_ec_sk; bn_null(t_ec_sk); bn_new(t_ec_sk);
+    bn_read_str(t_ec_sk, "AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991", strlen("AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991"), 16);
+    bn_mod_basic(t_ec_sk, t_ec_sk, q);
+    ec_mul_gen(state->tumbler_ec_pk->pk, t_ec_sk);
+    bn_free(t_ec_sk);
+
+    bn_t ps_x, ps_y; bn_null(ps_x); bn_new(ps_x); bn_null(ps_y); bn_new(ps_y);
+    bn_read_str(ps_x, "1234567890ABCDEF", 16, 16); bn_mod_basic(ps_x, ps_x, q);
+    bn_read_str(ps_y, "FEDCBA0987654321", 16, 16); bn_mod_basic(ps_y, ps_y, q);
+    g1_mul_gen(state->tumbler_ps_pk->Y_1, ps_y);
+    g2_mul_gen(state->tumbler_ps_pk->X_2, ps_x);
+    g2_mul_gen(state->tumbler_ps_pk->Y_2, ps_y);
+    bn_free(ps_x); bn_free(ps_y);
+
+    GEN cl_sk_t = strtoi("1234567890");
+    state->tumbler_cl_pk->pk = nupow(state->cl_params->g_q, cl_sk_t, NULL);
 
         
     while (!TOKEN_RECEIVED) {

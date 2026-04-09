@@ -656,6 +656,7 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     strncpy(bin_sub_threshold, bin_from_hash, BITS_THRESHOLD_PARAM - 1);
     
     if (binary_strings_equal(bin_sub_threshold, bin_sub_threshold_check, BITS_THRESHOLD_PARAM - 1) == RLC_OK) {
+      printf("[TUMBLER:promise_init_handler] Failed at binary_strings_equal check\n");
       RLC_THROW(ERR_CAUGHT);
     }
     
@@ -669,7 +670,13 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
       I_c[i] = 2*i + 1 - (bin_sub_threshold[i] - '0');
     }
 
+    printf("[TUMBLER:promise_init_handler] Debugging ps_verify (line 673)...\n");
+    printf("tid: "); bn_print(tid);
+    printf("sigma_tid->sigma_1: "); g1_print(sigma_tid->sigma_1);
+    printf("sigma_tid->sigma_2: "); g1_print(sigma_tid->sigma_2);
+    
     if (ps_verify(sigma_tid, tid, state->tumbler_ps_pk) != RLC_OK) {
+      printf("[TUMBLER:promise_init_handler] Failed at ps_verify (line 673 error)\n");
       RLC_THROW(ERR_CAUGHT);
     }
     
@@ -684,10 +691,12 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
       // }
 
       if (lhtlp_puzzle_gen(puzzle_for_cmp, state->lhtlp_param, sk_shares[2*i + (bin_sub_threshold[i] - '0')], rands[2*i + (bin_sub_threshold[i] - '0')], EXTEND_S)!= RLC_OK) {
+        printf("[TUMBLER:promise_init_handler] Failed at lhtlp_puzzle_gen (i=%d)\n", i);
         RLC_THROW(ERR_CAUGHT);
       }
       // The former holds.
       if (bn_cmp(puzzle_for_cmp->u, puzzles[2*i + (bin_sub_threshold[i] - '0')]->u) != RLC_EQ && mpz_cmp(puzzle_for_cmp->v, puzzles[2*i + (bin_sub_threshold[i] - '0')]->v) == 0) {
+        printf("[TUMBLER:promise_init_handler] Failed at bn_cmp and mpz_cmp check (i=%d)\n", i);
         RLC_THROW(ERR_CAUGHT);
       }
     }
@@ -704,6 +713,7 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
       ec_add(pk_share_check, pk_share_I, pk_share_lag_tem);
       // hold or
       if (ec_cmp(pk_share_check, state->tumbler_ec_pk2->pk) == RLC_EQ) {
+        printf("[TUMBLER:promise_init_handler] Failed at ec_cmp pk_share_check (i=%d)\n", i);
         RLC_THROW(ERR_CAUGHT);
       }
     }
@@ -711,6 +721,7 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     bn_mul(N_2, state->lhtlp_param->N, state->lhtlp_param->N);
     // hold or
     if (pi_lhtlp_range_verify(lhtlp_ranges, puzzles, state->lhtlp_param, BITS_STATISTIC_PARAM, N_2, interval_L) == RLC_OK) {
+      printf("[TUMBLER:promise_init_handler] Failed at pi_lhtlp_range_verify\n");
       RLC_THROW(ERR_CAUGHT);
     } 
     
@@ -725,10 +736,12 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
 
     GEN plain_alpha = strtoi(alpha_str);
     if (cl_enc(state->ctx_alpha, plain_alpha, state->tumbler_cl_pk, state->cl_params) != RLC_OK) {
+      printf("[TUMBLER:promise_init_handler] Failed at cl_enc (ctx_alpha)\n");
       RLC_THROW(ERR_CAUGHT);
     }
     GEN alpha_check = strtoi("100");
     if (cl_enc(state->ctx_alpha_check, alpha_check, state->tumbler_cl_pk, state->cl_params) != RLC_OK) {
+      printf("[TUMBLER:promise_init_handler] Failed at cl_enc (ctx_alpha_check)\n");
       RLC_THROW(ERR_CAUGHT);
     }
     
@@ -736,12 +749,14 @@ int promise_init_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     state->ctx_alpha_check->c2 = nupow(state->ctx_alpha_check->c2, plain_alpha , NULL);
    
     if (zk_cldl_prove(pi_cldl, plain_alpha, state->ctx_alpha, state->tumbler_cl_pk, state->cl_params) != RLC_OK) {
+      printf("[TUMBLER:promise_init_handler] Failed at zk_cldl_prove\n");
       RLC_THROW(ERR_CAUGHT);
     }
 
     bn_rand_mod(state->rand_for_bob, q);
     ec_mul_gen(state->go_to_rand_for_bob, state->rand_for_bob);
     if (commit(state->com_for_bob,state->go_to_rand_for_bob) != RLC_OK) {
+      printf("[TUMBLER:promise_init_handler] Failed at commit\n");
       RLC_THROW(ERR_CAUGHT);
     }
 
@@ -1584,12 +1599,7 @@ int main(void)
 
     // Mở hệ thống
     init(required_stack, required_maxprime);
-  if (core_init() != RLC_OK) 
-  {
-    fprintf(stderr, "[TUMBLER] Lỗi: Không thể thiết lập tham số đường cong Elliptic!\n");
-    fprintf(stderr, "===================\n");
-    exit(1);
-  }
+  
   printf("[TUMBLER] Khởi tạo đường cong Elliptic thành công!\n");
   printf("===================\n");
   int result_status = RLC_OK;
@@ -1625,33 +1635,24 @@ int main(void)
   }
 
   RLC_TRY {
-    //tumbler_state_new(state);
-    //ec_curve_get_ord(q);
+    tumbler_state_new(state);
+    
     bn_new(q);
-    ep_curve_get_ord(q);
+    ec_curve_get_ord(q);
     bn_new(r);
     bn_new(s);
     
-    //ep_curve_get_ord(q);
     printf("[TUMBLER] Giá trị q hiện tại: ");
     bn_print(q);
     printf("===================\n");
-    if (bn_is_zero(q)) {
-             
-             ep_param_set(SECG_K256); 
-             ep_curve_get_ord(q);
-             printf("Gia tri q sau khi ep nap: ");
-             bn_print(q);
-     }
-    //tumbler_state_t state;
-    //tumbler_state_null(state);
-    tumbler_state_new(state);
-
+    
     if (generate_cl_params(state->cl_params) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
     
-    /**
+    
+    
+    /*
     if (read_keys_from_file_tumbler(state->tumbler_ec_sk,
                                     state->tumbler_ec_pk,
                                     state->tumbler_ps_sk,
@@ -1662,9 +1663,12 @@ int main(void)
                                     state->bob_ec_pk) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-    **/
-
+    */
+      
+    
+    
     bn_read_str(state->tumbler_ec_sk->sk, "AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991", strlen("AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991"), 16);
+    bn_mod_basic(state->tumbler_ec_sk->sk, state->tumbler_ec_sk->sk, q);
     printf("[TUMBLER] **sk_h1:\n");
     bn_print(state->tumbler_ec_sk->sk);
     printf("===================\n");
@@ -1674,10 +1678,37 @@ int main(void)
     ec_mul_gen(state->tumbler_ec_pk->pk, state->tumbler_ec_sk->sk);
     
     bn_read_str(state->tumbler_ec_sk2->sk, "DBC8B40E03E646C69814D43D87D8632AC79031B31793DB58073F2249C11698CF", strlen("DBC8B40E03E646C69814D43D87D8632AC79031B31793DB58073F2249C11698CF"), 16);
+    bn_mod_basic(state->tumbler_ec_sk2->sk, state->tumbler_ec_sk2->sk, q);
     printf("[TUMBLER] **sk_h2:\n");
     bn_print(state->tumbler_ec_sk2->sk); 
     printf("===================\n");
     ec_mul_gen(state->tumbler_ec_pk2->pk, state->tumbler_ec_sk2->sk);
+    
+    // Hardcode PS, CL, and Bob/Alice keys
+    bn_t ps_x, ps_y; bn_null(ps_x); bn_new(ps_x); bn_null(ps_y); bn_new(ps_y);
+    bn_read_str(ps_x, "1234567890ABCDEF", 16, 16); bn_mod_basic(ps_x, ps_x, q);
+    bn_read_str(ps_y, "FEDCBA0987654321", 16, 16); bn_mod_basic(ps_y, ps_y, q);
+    g1_mul_gen(state->tumbler_ps_sk->X_1, ps_x);
+    g1_mul_gen(state->tumbler_ps_pk->Y_1, ps_y);
+    g2_mul_gen(state->tumbler_ps_pk->X_2, ps_x);
+    g2_mul_gen(state->tumbler_ps_pk->Y_2, ps_y);
+
+    GEN cl_sk_t = strtoi("1234567890");
+    state->tumbler_cl_sk->sk = cl_sk_t;
+    state->tumbler_cl_pk->pk = nupow(state->cl_params->g_q, cl_sk_t, NULL);
+    
+    bn_t a_ec_sk; bn_null(a_ec_sk); bn_new(a_ec_sk);
+    bn_read_str(a_ec_sk, "CC62414C758C52CE1A7B0ECE10BB8CAE753B63C1CEBD7F85A4FB57963B966462", strlen("CC62414C758C52CE1A7B0ECE10BB8CAE753B63C1CEBD7F85A4FB57963B966462"), 16);
+    bn_mod_basic(a_ec_sk, a_ec_sk, q);
+    ec_mul_gen(state->alice_ec_pk->pk, a_ec_sk);
+    bn_free(a_ec_sk);
+    
+    bn_t b_ec_sk; bn_null(b_ec_sk); bn_new(b_ec_sk);
+    bn_read_str(b_ec_sk, "D5428B52D9145EE5B51CEB5B1E0D382188E428BC79B45C2D034BA956BB84B316", strlen("D5428B52D9145EE5B51CEB5B1E0D382188E428BC79B45C2D034BA956BB84B316"), 16);
+    bn_mod_basic(b_ec_sk, b_ec_sk, q);
+    ec_mul_gen(state->bob_ec_pk->pk, b_ec_sk);
+    bn_free(b_ec_sk);
+    bn_free(ps_x); bn_free(ps_y);
 
 // Tumbler is always on-line
     while (1) {
