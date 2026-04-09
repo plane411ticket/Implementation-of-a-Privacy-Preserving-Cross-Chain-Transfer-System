@@ -17,14 +17,14 @@
 #define RLC_CLDL_PROOF_T3_SIZE 1070
 #define RLC_CLDL_PROOF_U1_SIZE 315
 #define RLC_CLDL_PROOF_U2_SIZE 80
-#define BYTES_MODULUS_RSA 128
-#define BYTES_MODULUS_RSA_2 640
-#define BYTES_MODULUS_RSA_2_MPZ 64
-#define BYTES_INTERVAL_PARAM_PUB 40
-#define BYTES_INTERVAL_EXT_PARAM_PUB 41
-#define BYTES_RANGE_PI_W 257
-#define BYTES_MODULUS_RSA_POWER 256
-#define BYTES_ECC_ORDER 32
+#define BYTES_MODULUS_RSA 1024
+#define BYTES_MODULUS_RSA_2 1024
+#define BYTES_MODULUS_RSA_2_MPZ 512
+#define BYTES_INTERVAL_PARAM_PUB 160
+#define BYTES_INTERVAL_EXT_PARAM_PUB 80
+#define BYTES_RANGE_PI_W 512
+#define BYTES_MODULUS_RSA_POWER 512
+#define BYTES_ECC_ORDER 64
 #define BYTES_BIT 1
 #define BYTES_THRESHOLD_LEN_PARAM 2
 
@@ -49,19 +49,25 @@
 
 static uint8_t tx[2] = { 116, 120 }; // "tx"
 
-int init();
+// Khởi tạo và dọn dẹp hệ thống/thư viện (RELIC, PARI, vv.)
+// int init();
+int init(size_t dynamic_pari_stack_size, size_t pari_max_prime);
+
 int clean();
 
+// Các hàm tiện ích dùng chung
 void memzero(void *ptr, size_t len);
-long long cpucycles(void);
-long long ttimer(void);
+long long cpucycles(void); // Đo lường số chu kỳ CPU
+long long ttimer(void);    // Đo thời gian
 
+// Hàm serialize và deserialize giúp chuyển cấu trúc tin nhắn sang byte để gửi qua mạng
 void serialize_message(uint8_t **serialized,
 											 const message_t message,
 											 const unsigned msg_type_length,
 											 const unsigned msg_data_length);
 void deserialize_message(message_t *deserialized_message, const uint8_t *serialized);
 
+// Quản lý khóa mật mã lưu trữ ngoại tuyến
 int generate_keys_and_write_to_file(const cl_params_t params);
 int read_keys_from_file_alice_bob(const char *name,
 																	ec_secret_key_t ec_sk,

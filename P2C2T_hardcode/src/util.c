@@ -7,41 +7,63 @@
 #include "pari/pari.h"
 #include "types.h"
 #include "util.h"
+int init(size_t dynamic_pari_stack_size, size_t pari_max_prime) {
+    if (core_init() != RLC_OK) {
+        return RLC_ERR;
+    }
+    if (pc_param_set_any() != RLC_OK) {
+        return RLC_ERR;
+    }
 
-int init() {
-	if (core_init() != RLC_OK) {
-		core_clean();
-		return RLC_ERR;
-	}
-        
-        
+    // Khởi tạo PARI Stack linh hoạt, chỉ lấy bộ nhớ thực sự cần
+    if (dynamic_pari_stack_size > 0) {
+        pari_init(dynamic_pari_stack_size, pari_max_prime);
+        setrand(getwalltime());
+    }
 
-	// Initialize the pairing and elliptic curve groups.
-	//if (pc_param_set_any() != RLC_OK) {
-	//	core_clean();
-	//	return RLC_ERR;
-	//}
-
-	if (ep_param_set_any() != RLC_OK) {
-		fprintf(stderr, "Lỗi: Module EP chưa được khởi tạo đúng!\n");
-		core_clean();
-		return RLC_ERR;
-	}
-
-	// Set the secp256k1 curve, which is used in Bitcoin.
-	ep_param_set(SECG_K256);
-	if (ep_param_get == NULL) {
-        	fprintf(stderr, "Lỗi: Không tìm thấy tham số cho SECG_K256!\n");
-        	core_clean();
-        	return RLC_ERR;
-    	}
-        
-        //  Initialize the PARI stack (in bytes) and randomness.
-	pari_init(1000000000, 2);
-	setrand(getwalltime());
-	
-	return RLC_OK;
+    return RLC_OK;
 }
+// int init() {
+// 	if (core_init() != RLC_OK) {
+// 		core_clean();
+// 		return RLC_ERR;
+// 	}
+        
+        
+
+// 	// Initialize the pairing and elliptic curve groups.
+// 	//if (pc_param_set_any() != RLC_OK) {
+// 	//	core_clean();
+// 	//	return RLC_ERR;
+// 	//}
+
+// 	if (ep_param_set_any() != RLC_OK) {
+// 		fprintf(stderr, "Lỗi: Module EP chưa được khởi tạo đúng!\n");
+// 		core_clean();
+// 		return RLC_ERR;
+// 	}
+
+// 	// Set the secp256k1 curve, which is used in Bitcoin.
+// 	ep_param_set(SECG_K256);
+// 	if (ep_param_get == NULL) {
+//         	fprintf(stderr, "Lỗi: Không tìm thấy tham số cho SECG_K256!\n");
+//         	core_clean();
+//         	return RLC_ERR;
+//     	}
+        
+//     //     //  Initialize the PARI stack (in bytes) and randomness.
+// 	// pari_init(10368709120, 2);
+// 	// setrand(getwalltime());
+
+// 	// //  Initialize the PARI stack (in bytes) and randomness.
+//     //     pari_init(17179869184, 2); // 16GB cho stack PARI
+//     //     setrand(getwalltime());
+// 	pari_init(2000000000, 2);
+// 	setrand(getwalltime());
+
+	
+// 	return RLC_OK;
+// }
 
 int clean() {
 	pari_close();
@@ -518,10 +540,10 @@ int generate_cl_params(cl_params_t params) {
 		// Order of the secp256k1 elliptic curve group and the group G^q.
 		params->q = strtoi("115792089237316195423570985008687907852837564279074904382605163141518161494337");
 		//params->g_q = qfi(g_q_a, g_q_b, g_q_c);
-                params->g_q = cgetg(4, t_QFB);      // t_QFI là type quadratic form trong PARI
-                gel(params->g_q, 1) = g_q_a;        // a
-                gel(params->g_q, 2) = g_q_b;        // b
-                gel(params->g_q, 3) = g_q_c;
+                params->g_q = Qfb0(g_q_a, g_q_b, g_q_c); // cgetg(4, t_QFB) was wrong context      // t_QFI là type quadratic form trong PARI
+                ////gel(params->g_q, 1) = g_q_a;        // a
+                ////gel(params->g_q, 2) = g_q_b;        // b
+                ////gel(params->g_q, 3) = g_q_c;
 
 		GEN A = strtoi("0");
 		GEN B = strtoi("7");
@@ -555,10 +577,10 @@ int cl_enc(cl_ciphertext_t ciphertext,
       L = subii(L, params->q);
     }
     //GEN fm = qfi(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
-    GEN fm = cgetg(4, t_QFB);
-    gel(fm, 1) = sqri(params->q);
-    gel(fm, 2) = mulii(L, params->q);
-    gel(fm, 3) = shifti(subii(sqri(L), params->Delta_K), -2);
+    GEN fm = Qfb0(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
+    //gel(fm, 1) = sqri(params->q);
+    //gel(fm, 2) = mulii(L, params->q);
+    //gel(fm, 3) = shifti(subii(sqri(L), params->Delta_K), -2);
     ciphertext->c2 = gmul(nupow(public_key->pk, ciphertext->r, NULL), fm);
   } RLC_CATCH_ANY {
     result_status = RLC_ERR;
@@ -803,7 +825,8 @@ int ps_unblind(ps_signature_t signature,
 
 		g1_get_ord(q);
 
-		bn_gcd_ext(x, r_inverse, NULL, decom->r, q);
+bn_neg(r_inverse, decom->r);
+                bn_mod_basic(r_inverse, r_inverse, q);
     if (bn_sign(r_inverse) == RLC_NEG) {
       bn_add(r_inverse, r_inverse, q);
     }
@@ -878,6 +901,8 @@ int pedersen_commit(pedersen_com_t com,
 
 	bn_t q;
 	bn_null(q);
+	// bn_null(r);
+	bn_t r;
 	bn_null(r);
 
 	g1_t g1_gen, g1_to_the_r;
@@ -1146,13 +1171,15 @@ int zk_cldl_prove(zk_proof_cldl_t proof,
 									const cl_params_t params) {
 	int result_status = RLC_OK;
 
-	bn_t rlc_k, rlc_r2, rlc_soundness;
+	bn_t rlc_k,k, rlc_r2, rlc_soundness;
 	bn_null(rlc_k);
+	bn_null(k);
 	bn_null(rlc_r2);
 	bn_null(rlc_soundness);
 
 	RLC_TRY {
 		bn_new(rlc_k);
+		bn_new(k);
 		bn_new(rlc_r2);
 		bn_new(rlc_soundness);
 
@@ -1171,10 +1198,10 @@ int zk_cldl_prove(zk_proof_cldl_t proof,
 		}
 		// f^r_2 = (q^2, Lq, (L - Delta_k) / 4)
 		//GEN fr2 = qfi(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
-                GEN fr2 = cgetg(4, t_QFB);
-                gel(fr2, 1) = sqri(params->q);
-                gel(fr2, 2) = mulii(L, params->q);
-                gel(fr2, 3) = shifti(subii(sqri(L), params->Delta_K), -2);
+                GEN fr2 = Qfb0(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
+                //gel(fr2, 1) = sqri(params->q);
+                //gel(fr2, 2) = mulii(L, params->q);
+                //gel(fr2, 3) = shifti(subii(sqri(L), params->Delta_K), -2);
 
 		proof->t1 = gmul(nupow(public_key->pk, r1, NULL), fr2);
 		ec_mul_gen(proof->t2, rlc_r2);
@@ -1282,10 +1309,10 @@ int zk_cldl_verify(const zk_proof_cldl_t proof,
 		}
 		// f^u_2 = (q^2, Lq, (L - Delta_k) / 4)
 		//GEN fu2 = qfi(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
-                GEN fu2 = cgetg(4, t_QFB);
-                gel(fu2, 1) = sqri(params->q);
-                gel(fu2, 2) = mulii(L, params->q);
-                gel(fu2, 3) = shifti(subii(sqri(L), params->Delta_K), -2);
+                GEN fu2 = Qfb0(sqri(params->q), mulii(L, params->q), shifti(subii(sqri(L), params->Delta_K), -2));
+                //gel(fu2, 1) = sqri(params->q);
+                //gel(fu2, 2) = mulii(L, params->q);
+                //gel(fu2, 3) = shifti(subii(sqri(L), params->Delta_K), -2);
 
 		ec_mul_gen(g_to_the_u2, rlc_u2);
 		ec_mul(Q_to_the_k, Q, rlc_k);

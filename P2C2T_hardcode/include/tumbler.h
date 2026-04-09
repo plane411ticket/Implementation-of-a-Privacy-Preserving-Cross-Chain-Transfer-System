@@ -1,6 +1,14 @@
 #ifndef P2C2T_ECDSA_INCLUDE_TUMBLER
 #define P2C2T_ECDSA_INCLUDE_TUMBLER
 
+/**
+ * @file tumbler.h
+ * @brief Định nghĩa các hằng số, cấu trúc thay thái và hàm giao tiếp của bên Tumbler.
+ * 
+ * Tumbler đóng vai trò là một máy chủ trung gian định tuyến và giám sát 
+ * các giao dịch giữa Alice (người gửi) và Bob (người nhận).
+ */
+
 #include <stddef.h>
 #include <string.h>
 #include "relic/relic.h"

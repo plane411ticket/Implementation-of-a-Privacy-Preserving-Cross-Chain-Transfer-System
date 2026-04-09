@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nndd411/blockchain/ptoctot/P2C2T_hardcode
+CMAKE_SOURCE_DIR = /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build
+CMAKE_BINARY_DIR = /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -102,14 +102,14 @@ src/clean: src/CMakeFiles/wrapper.dir/clean
 src/CMakeFiles/alice.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=1,2,3 "Built target alice"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=1,2,3 "Built target alice"
 .PHONY : src/CMakeFiles/alice.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/alice.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/alice.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/alice.dir/rule
 
 # Convenience name for target.
@@ -128,14 +128,14 @@ src/CMakeFiles/alice.dir/clean:
 src/CMakeFiles/bob.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=4,5,6 "Built target bob"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=4,5,6 "Built target bob"
 .PHONY : src/CMakeFiles/bob.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/bob.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/bob.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/bob.dir/rule
 
 # Convenience name for target.
@@ -154,14 +154,14 @@ src/CMakeFiles/bob.dir/clean:
 src/CMakeFiles/tumbler.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=7,8,9 "Built target tumbler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=7,8,9 "Built target tumbler"
 .PHONY : src/CMakeFiles/tumbler.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/tumbler.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/tumbler.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/tumbler.dir/rule
 
 # Convenience name for target.
@@ -180,14 +180,14 @@ src/CMakeFiles/tumbler.dir/clean:
 src/CMakeFiles/wrapper.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=10,11 "Built target wrapper"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=10,11 "Built target wrapper"
 .PHONY : src/CMakeFiles/wrapper.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/wrapper.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/wrapper.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/wrapper.dir/rule
 
 # Convenience name for target.
