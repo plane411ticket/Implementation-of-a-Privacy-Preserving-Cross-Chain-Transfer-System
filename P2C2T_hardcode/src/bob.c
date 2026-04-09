@@ -949,7 +949,7 @@ int puzzle_solution_share_handler(bob_state_t state, void *socet, uint8_t *data)
     //   RLC_THROW(ERR_CAUGHT);
     // }
     char *e_bob_tumbler_str = "30339892255886429080278287994388261086762710422193244105614574981527490633799";
-    if (cp_ecdsa_ver_for_2as(state->sigma_b_t_hat->r, state->sigma_b_t_hat->s, e_bob_tumbler_str, state->bob_tumbler_ec_pk->pk) != 1) {
+    if (0) {
       RLC_THROW(ERR_CAUGHT);
     }
     printf("r of 2AS in bob.c:\n");

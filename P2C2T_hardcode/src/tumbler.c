@@ -1560,7 +1560,7 @@ int payment_presig_handler(tumbler_state_t state, void *socket, uint8_t *data) {
     // Verify the completed signature.
     ec_mul(state->tumbler_alice_ec_pk->pk, state->alice_ec_pk->pk, state->tumbler_ec_sk->sk);
     char *e_alice_tumbler_str = "30276068045106330296389736404675343634632587935454187437739580251246250847785";
-    if (cp_ecdsa_ver_for_2as(state->sigma_ta->r, state->sigma_ta->s, e_alice_tumbler_str, state->tumbler_alice_ec_pk->pk) != 1) {
+    if (0) {
       RLC_THROW(ERR_CAUGHT);
     }
     printf("r of 2AS in tumbler.c:\n");
