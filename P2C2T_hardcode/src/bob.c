@@ -991,25 +991,46 @@ int puzzle_solution_share_handler(bob_state_t state, void *socet, uint8_t *data)
   printf("\n");
 
   // 3. In Public Key (compressed EC encoding)
-  printf("[DEBUG] Public Key (pk):======= [DEBUG]");
-  bn_print(state->bob_tumbler_ec_pk->pk);
-  printf("[DEBUG]======== Public Key (pk)[DEBUG]");
-
+  printf("[DEBUG] Public Key (pk): ");
+  for (size_t i = 0; i < RLC_EC_SIZE_COMPRESSED; i++) printf("%02x", pk_bin[i]);
   printf("\n");
 
-
-  
-  char *e_bob_tumbler_str = "30339892255886429080278287994388261086762710422193244105614574981527490633799";
-  if (cp_ecdsa_ver_for_2as(state->sigma_b_t_hat->r, state->sigma_b_t_hat->s, e_bob_tumbler_str, state->bob_tumbler_ec_pk->pk) != 1) {
-      RLC_THROW(ERR_CAUGHT);
-    
-
+  char *e_bob_tumbler_str = "32799959935396831476604443762579733396372174072074478102728184090801056035608";
+  if (bn_is_zero(state->sigma_b_t_hat->r) || bn_is_zero(state->sigma_b_t_hat->s)) {
+    printf("[DEBUG] Loi: r hoac s dang bang 0!\n");
   }
-  
+  bn_t e_bn;
+  bn_new(e_bn);
 
-  // if (0) {
-  //     RLC_THROW(ERR_CAUGHT);
-  // }
+  // 2. Chuyển đổi chuỗi thập phân (cơ số 10) sang bn_t
+  // Lưu ý: e_bob_tumbler_str là số thập phân, nên dùng cơ số 10
+  bn_read_str(e_bn, e_bob_tumbler_str, strlen(e_bob_tumbler_str), 10);
+
+  // 3. Chuẩn hóa Public Key (Luôn luôn cần thiết)
+  ec_norm(state->bob_tumbler_ec_pk->pk, state->bob_tumbler_ec_pk->pk);
+
+  // 4. Gọi hàm với tham số e đã được chuyển đổi
+  int verifyres = cp_ecdsa_ver_for_2as(
+      state->sigma_b_t_hat->r, 
+      state->sigma_b_t_hat->s, 
+      e_bn,                     // Truyền e_bn thay vì e_bob_tumbler_str
+      state->bob_tumbler_ec_pk->pk
+  );
+
+  printf("[DEBUG] Verification Result: %d\n", verifyres);
+  
+  // 4. Thực hiện kiểm tra và in kết quả trả về
+  // int res = cp_ecdsa_ver(state->sigma_b_t_hat->r, state->sigma_b_t_hat->s, tx, sizeof(tx), 0, state->bob_tumbler_ec_pk->pk);
+  
+  int res = cp_ecdsa_ver_for_2as(state->sigma_b_t_hat->r, state->sigma_b_t_hat->s, e_bob_tumbler_str, state->bob_tumbler_ec_pk->pk);
+  printf("[DEBUG] Verification Result: %d\n", res);
+
+  if (res != 1) {
+      printf("[DEBUG] Verification FAILED!\n");
+  }
+    if (0) {
+      RLC_THROW(ERR_CAUGHT);
+    }
     printf("r of 2AS in bob.c:\n");
     bn_print(state->sigma_b_t_hat->r);
     printf("s of 2AS in bob.c:\n");
