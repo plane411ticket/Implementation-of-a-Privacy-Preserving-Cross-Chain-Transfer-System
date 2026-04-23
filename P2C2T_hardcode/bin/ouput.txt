@@ -1,0 +1,420 @@
+[TUMBLER] Khởi tạo đường cong Elliptic thành công!
+===================
+[TUMBLER] Giá trị q hiện tại: B64000000000FF2F2200000085FD547FD8001F44B6B7F4B7C2BC818F7B6BEF99
+===================
+[TUMBLER] **sk_h1:
+AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991
+===================
+[TUMBLER] Kiểm tra Order q: B64000000000FF2F2200000085FD547FD8001F44B6B7F4B7C2BC818F7B6BEF99
+===================
+[TUMBLER] **sk_h2:
+2588B40E03E547977614D43D01DB0EAAEF90126E60DBE6A04482A0BA45AAA936
+Connecting to Tumbler...
+
+**sk_s:
+1622414C758B539EF87B0ECD8ABE382E9D3B447D18058ACDE23ED606C02A74C9
+**sk_r:
+1F028B52D9135FB6931CEB5A980FE3A1B0E40977C2FC6775408F27C74018C37D
+===================
+Received message size: 56 bytes
+[TUMBLER] Đã nhận tin nhắn 56 bytes
+===================
+Executing registration_z...
+[TUMBLER] Đang thực thi registration_z...
+===================
+[TUMBLER:registration_handler] Đã bắt đầu thực thi...
+===================
+
+Gia tri e da nhap vao Alice: BAEDC1F131C96C320BB8B2CF852B67526AB4AF9C1DCCC48B88482F38416DE700
+[DEBUG] Message received successfully. Raw size: 154556 bytes
+[DEBUG] --- New Message Received ---
+[DEBUG] Size: 154556 bytes
+[DEBUG] Message Type: registration_vtd
+[DEBUG] Executing handler...
+
+Gia tri e da nhap vao Alice: BAEDC1F131C96C320BB8B2CF852B67526AB4AF9C1DCCC48B88482F38416DE700
+
+Running time of lhtlp_param_gen by tumbler: 57.62035 sec
+Finished executing registration_z.
+
+[TUMBLER] Hoàn thành thực thi registration_z.
+
+===================
+Received message size: 159 bytes
+[TUMBLER] Đã nhận tin nhắn 159 bytes
+===================
+Executing registration_tid...
+[TUMBLER] Đang thực thi registration_tid...
+===================
+[TUMBLER:registration_tid_handler] Đã bắt đầu thực thi...
+===================
+Finished executing registration_tid.
+
+[TUMBLER] Hoàn thành thực thi registration_tid.
+
+===================
+Received message size: 154756 bytes
+[TUMBLER] Đã nhận tin nhắn 154756 bytes
+===================
+Executing promise_init...
+[TUMBLER] Đang thực thi promise_init...
+===================
+[TUMBLER:promise_init_handler] Đã bắt đầu thực thi...
+===================
+
+Gia tri e da nhap vao Alice: BAEDC1F131C96C320BB8B2CF852B67526AB4AF9C1DCCC48B88482F38416DE700
+[TUMBLER:promise_init_handler] Debugging ps_verify (line 673)...
+tid: 450D58EDF4D634EA7153D82308457D90CE1C09A60269BAFCC8CC23F52B190E8A
+sigma_tid->sigma_1: 7B131A3BB4D48404 7E1C697F6C5D0BCF 298E107CFD6C965E 109BD8398DF0FCFF
+437BA5AA0BCF7404 55B2CCE3D217633A D48D9449C151DEF9 B6D352254888FE71
+0000000000000000 0000000000000000 0000000000000000 0000000000000001
+sigma_tid->sigma_2: 6E2253680E8D89F7 6B2E475DC1329EFC 6FBDF60A7EEE2071 119A178CE1CF9AFC
+A7A774D68E02700B BE56D6A1C20F0631 41CBB6FFEE01D64B 6343DEE8D5C8A278
+0000000000000000 0000000000000000 0000000000000000 0000000000000001
+Finished executing promise_init.
+
+[TUMBLER] Hoàn thành thực thi promise_init.
+
+===================
+Received message size: 154 bytes
+[TUMBLER] Đã nhận tin nhắn 154 bytes
+===================
+Executing promise_zkdl...
+[TUMBLER] Đang thực thi promise_zkdl...
+===================
+[TUMBLER:promise_zkdl_handler] Đã bắt đầu thực thi...
+===================
+
+Gia tri e da nhap vao Alice: BAEDC1F131C96C320BB8B2CF852B67526AB4AF9C1DCCC48B88482F38416DE700
+Received message size: 3226 bytes
+[BOB] Đã nhận tin nhắn 3226 bytes
+===================
+Executing token_share...
+[BOB] Đang thực thi token_share...
+===================
+[BOB:token_share_handler] Đã bắt đầu thực thi...
+===================
+Finished executing token_share.
+
+[BOB] Hoàn thành thực thi token_share.
+
+===================
+Connecting to Tumbler...
+
+[BOB:promise_init] Đã bắt đầu thực thi...
+===================
+Debug: g_q = Qfb(4008431686288539256019978212352910132512184203702279780629385896624473051840259706993970111658701503889384191610389161437594619493081376284617693948914940268917628321033421857293703008209538182518138447355678944124861126384966287069011522892641935034510731734298233539616955610665280660839844718152071538201031396242932605390717004106131705164194877377, -3117991088204303366418764671444893060060110057237597977724832444027781815030207752301780903747954421114626007829980376204206959818582486516608623149988315386149565855935873517607629155593328578131723080853521348613293428202727746191856239174267496577422490575311784334114151776741040697808029563449966072264511544769861326483835581088191752567148165409, 7226982982667784284607340011220616424554394853592495056851825214613723615410492468400146084481943091452495677425649405002137153382700126963171182913281089395393193450415031434185562111748472716618186256410737780813669746598943110785615647848722934493732187571819575328802273312361412673162473673367423560300753412593868713829574117975260110889575205719)
+sk = 12712169835408854486247398198738119486735903266727874920819843533306984874934108752047756599036087500410958504466361988636417562784064156126220308330865410785942329426485691923131537983906458861645189232500881075738574348369646935115525886598603471017371550038901216513288515574802790871
+q = 115792089237316195423570985008687907852837564279074904382605163141518161494337
+[BOB:promise_init] Chuan bi goi nupow(g_q, sk, NULL)...
+[BOB:promise_init] Chuan bi goi nupow(g_q, sk, NULL)...
+[BOB:promise_init] Da goi nupow thanh cong.
+[BOB:promise_init] Da goi nupow thanh cong.
+[BOB:promise_init] Chuan bi goi qfbred()...
+[BOB:promise_init] Da goi qfbred thanh cong.
+Debug: pk = Qfb(5465317954245458921082902653896512901129080432899407342031610654441993879216183628309208893604109569509233354189888995162364635841988419876761936006517122179511721716557827508619297546867113531884418349065196060491277687258714400180709605347942462758957536630872995292933112262565797159678578068532415681752986739893311940796000905387944916957457701133, 4074104722118806943847182535402603119175531596187147629242664421586113547726012641900985843834857709498413136848642931222597175217685222153268979151087706130485070585587619844155658621817608124445862142726022697765293713023435544213666546558122595296252526963580165570536453463572850101152804142689910283098368579170524903572025968529181452747480599815, 5615040708715310016766905621348805850614250108925023127395847279045584839925960912730968814141832656922267824119884051784873683103277600487297662124774918166424380150952255110641991155816881717730427583695249255867024152731795790546677710737238115825859931277656323485292519797955049987144625746672746028970135225391116401408779000456752986718142550303)
+Received message size: 6968 bytes
+[BOB] Đã nhận tin nhắn 6968 bytes
+===================
+Executing promise_com...
+[BOB] Đang thực thi promise_com...
+===================
+[BOB:promise_com_handler] Đã bắt đầu thực thi...
+===================
+Finished executing promise_com.
+
+[BOB] Hoàn thành thực thi promise_com.
+
+===================
+Received message size: 2428 bytes
+[BOB] Đã nhận tin nhắn 2428 bytes
+===================
+Executing promise_decom...
+[BOB] Đang thực thi promise_decom...
+===================
+[BOB:promise_decom_handler] Đã bắt đầu thực thi...
+===================
+**pk_2 of bob and tumbler:
+6CEE2AB45F0D2198 A6578C6C89E7FDD4 898D099FE45B50CB 7154466A7B450F82
+9996A710A08A3B91 3142E36853472F7B 71635DFFE438E14F BD932AD1C6A60A55
+0000000000000000 0000000000000000 0000000000000000 0000000000000001
+Finished executing promise_zkdl.
+
+[TUMBLER] Hoàn thành thực thi promise_zkdl.
+
+===================
+Received message size: 57 bytes
+[TUMBLER] Đã nhận tin nhắn 57 bytes
+===================
+Executing promise_presig...
+[TUMBLER] Đang thực thi promise_presig...
+===================
+[TUMBLER:promise_presig_handler] Đã bắt đầu thực thi...
+===================
+
+Gia tri e da nhap vao Alice: BAEDC1F131C96C320BB8B2CF852B67526AB4AF9C1DCCC48B88482F38416DE700
+Finished executing promise_presig.
+
+[TUMBLER] Hoàn thành thực thi promise_presig.
+
+===================
+Received message size: 9718 bytes
+[TUMBLER] Đã nhận tin nhắn 9718 bytes
+===================
+Executing payment_init...
+[TUMBLER] Đang thực thi payment_init...
+===================
+[TUMBLER:payment_init_handler] Đã bắt đầu thực thi...
+===================
+[TUMBLER:payment_init] Decrypted gamma (inside):
+9734556AE1EE36C399B8CE802F1174EFDF73B88345370A20185520308470B329
+[TUMBLER:payment_init] Decrypted gamma (inside):
+9734556AE1EE36C399B8CE802F1174EFDF73B88345370A20185520308470B329
+[TUMBLER:payment_init] Debug gamma_check:
+10715DC0410D64680C30AA1262D1ADFE42E72A1CA3C306C44BC4C87FBF84F209
+[TUMBLER:payment_init] Debug bn_check:
+AFF15DC040BBA74F2830A9E777AC9CC0192A0F44829391AD20DF12FE33733D02
+[TUMBLER:payment_init] Debug state->gamma:
+9734556AE1EE36C399B8CE802F1174EFDF73B88345370A20185520308470B329
+[TUMBLER:payment_init] Debug g_to_gamma:
+7693967EC6A28ED0 2D51BCB1F2033A73 3A83BF641CF9C54C CF772064CE9D51A6
+9AD42BD6C1CB1BD7 4970C994ADF92629 C1950EFB4C1F8B79 01252C0708A7F0DC
+0000000000000000 0000000000000000 0000000000000000 0000000000000001
+[TUMBLER:payment_init] Debug g_to_alpha_times_beta_times_tau:
+6DD45901211DFFC8 A377B136B8AD7BC3 29BE204EEF35E9B5 CC71FD6FE5E37E8B
+9D30C7123992A74B DBC2E29F796E5E11 E435FE32EC89AFBC 39A8EBCA56BCD8F8
+0000000000000000 0000000000000000 0000000000000000 0000000000000001
+Finished executing payment_init.
+
+[TUMBLER] Hoàn thành thực thi payment_init.
+
+===================
+Received message size: 155 bytes
+[TUMBLER] Đã nhận tin nhắn 155 bytes
+===================
+Executing payment_decom...
+[TUMBLER] Đang thực thi payment_decom...
+===================
+[TUMBLER:payment_decom_handler] Đã bắt đầu thực thi...
+===================
+
+Gia tri e da nhap vao Alice: BAEDC1F131C96C320BB8B2CF852B67526AB4AF9C1DCCC48B88482F38416DE700
+[ALICE] Doc puzzles[0]->u
+[ALICE] Doc puzzles[1]->u
+[ALICE] Doc puzzles[2]->u
+[ALICE] Doc puzzles[3]->u
+[ALICE] Doc puzzles[4]->u
+[ALICE] Doc puzzles[5]->u
+[ALICE] Doc puzzles[6]->u
+[ALICE] Doc puzzles[7]->u
+[ALICE] Doc puzzles[8]->u
+[ALICE] Doc puzzles[9]->u
+[ALICE] Doc puzzles[10]->u
+[ALICE] Doc puzzles[11]->u
+[ALICE] Doc puzzles[12]->u
+[ALICE] Doc puzzles[13]->u
+[ALICE] Doc puzzles[14]->u
+[ALICE] Doc puzzles[15]->u
+[ALICE] Doc puzzles[16]->u
+[ALICE] Doc puzzles[17]->u
+[ALICE] Doc puzzles[18]->u
+[ALICE] Doc puzzles[19]->u
+[ALICE] Doc puzzles[20]->u
+[ALICE] Doc puzzles[21]->u
+[ALICE] Doc puzzles[22]->u
+[ALICE] Doc puzzles[23]->u
+[ALICE] Doc puzzles[24]->u
+[ALICE] Doc puzzles[25]->u
+[ALICE] Doc puzzles[26]->u
+[ALICE] Doc puzzles[27]->u
+[ALICE] Doc puzzles[28]->u
+[ALICE] Doc puzzles[29]->u
+[DEBUG] Successfully finished executing: registration_vtd
+
+[DEBUG] Resources cleaned: message_free(msg) called.
+[DEBUG] --- End of handle_message ---
+
+[DEBUG] Message handled and finished.
+[DEBUG] Message received successfully. Raw size: 92 bytes
+[DEBUG] --- New Message Received ---
+[DEBUG] Size: 92 bytes
+[DEBUG] Message Type: registration_done
+[DEBUG] Executing handler...
+[DEBUG] Successfully finished executing: registration_done
+
+[DEBUG] Resources cleaned: message_free(msg) called.
+[DEBUG] --- End of handle_message ---
+
+[DEBUG] Message handled and finished.
+Registration time: 91.11939 sec
+Connecting to Bob...
+
+Registration time plus token share: 91.12079 sec
+[DEBUG] Message received successfully. Raw size: 4334 bytes
+[DEBUG] --- New Message Received ---
+[DEBUG] Size: 4334 bytes
+[DEBUG] Message Type: puzzle_share
+[DEBUG] Executing handler...
+[DEBUG] Successfully finished executing: puzzle_share
+
+[DEBUG] Resources cleaned: message_free(msg) called.
+[DEBUG] --- End of handle_message ---
+
+[DEBUG] Message handled and finished.
+Connecting to Tumbler...
+
+[DEBUG] Message received successfully. Raw size: 121 bytes
+[DEBUG] --- New Message Received ---
+[DEBUG] Size: 121 bytes
+[DEBUG] Message Type: payment_zkdl
+[DEBUG] Executing handler...
+[DEBUG] Successfully finished executing: payment_zkdl
+
+[DEBUG] Resources cleaned: message_free(msg) called.
+[DEBUG] --- End of handle_message ---
+
+[DEBUG] Message handled and finished.
+[DEBUG] Message received successfully. Raw size: 2293 bytes
+[DEBUG] --- New Message Received ---
+[DEBUG] Size: 2293 bytes
+[DEBUG] Message Type: payment_ctx
+[DEBUG] Executing handler...
+
+Gia tri e da nhap vao Alice: BAEDC1F131C96C320BB8B2CF852B67526AB4AF9C1DCCC48B88482F38416DE700
+**pk_1 between alice and tumbler:
+75B24BC8B2BB9A6E 92D39B834E54896F 4F996231E919171E 79C185BB60125668
+1E1042146D2A0765 B41091F6FCD3FCBC 21D4F072B77C154C 426B304BDD264C3C
+0000000000000000 0000000000000000 0000000000000000 0000000000000001
+Finished executing payment_decom.
+
+[TUMBLER] Hoàn thành thực thi payment_decom.
+
+===================
+Received message size: 57 bytes
+[TUMBLER] Đã nhận tin nhắn 57 bytes
+===================
+Executing payment_presig...
+[TUMBLER] Đang thực thi payment_presig...
+===================
+[TUMBLER:payment_presig_handler] Đã bắt đầu thực thi...
+===================
+r of 2AS in tumbler.c:
+0
+s of 2AS in tumbler.c:
+2C5AC3B386709AF12C2802648A7E32FE9FF6FDBA0E1914AEED1F92C86828879F
+Finished executing promise_decom.
+
+[BOB] Hoàn thành thực thi promise_decom.
+
+===================
+Received message size: 21 bytes
+[BOB] Đã nhận tin nhắn 21 bytes
+===================
+Executing promise_over...
+[BOB] Đang thực thi promise_over...
+===================
+[BOB:promise_over_handler] Đã bắt đầu thực thi...
+===================
+Finished executing promise_over.
+
+[BOB] Hoàn thành thực thi promise_over.
+
+===================
+
+Puzzle promise time: 38.08843 sec
+Connecting to Alice...
+
+[BOB:puzzle_share] Đã bắt đầu thực thi...
+===================
+Received message size: 26 bytes
+[BOB] Đã nhận tin nhắn 26 bytes
+===================
+Executing puzzle_share_done...
+[BOB] Đang thực thi puzzle_share_done...
+===================
+[BOB:puzzle_share_done_handler] Đã bắt đầu thực thi...
+===================
+Finished executing puzzle_share_done.
+
+[BOB] Hoàn thành thực thi puzzle_share_done.
+
+===================
+
+Puzzle promise and share time: 38.36345 sec
+Received message size: 98 bytes
+[BOB] Đã nhận tin nhắn 98 bytes
+===================
+Executing puzzle_solution_share...
+[BOB] Đang thực thi puzzle_solution_share...
+===================
+[BOB:puzzle_solution_share_handler] Đã bắt đầu thực thi...
+===================
+[BOB:debug] ECDSA verify inputs: =================
+  - sizeof(tx): 2
+  - tx (hex): 7478
+  - sigma.r:
+3FABA73EAEC89C09F8A57863BC0EBEBF66F0B06E32346E7124BF13EE549BE354
+  - sigma.s:
+38FEE92B18D036A8D19BF168869CA8CFC4F2BBEBFF0CE1233B71526D5B430100
+  - bob_tumbler_ec_pk:
+6CEE2AB45F0D2198 A6578C6C89E7FDD4 898D099FE45B50CB 7154466A7B450F82
+9996A710A08A3B91 3142E36853472F7B 71635DFFE438E14F BD932AD1C6A60A55
+0000000000000000 0000000000000000 0000000000000000 0000000000000001
+==============================> [DEBUG] ECDSA Verification Start
+[DEBUG] Signature r: 0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] Signature s: 0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] Transaction Hash (tx): 7478
+[DEBUG] Public Key (pk): 000000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] Verification Result: 0
+[DEBUG] Verification FAILED!
+r of 2AS in bob.c:
+3FABA73EAEC89C09F8A57863BC0EBEBF66F0B06E32346E7124BF13EE549BE354
+s of 2AS in bob.c:
+38FEE92B18D036A8D19BF168869CA8CFC4F2BBEBFF0CE1233B71526D5B430100
+[DEBUG] Successfully finished executing: payment_ctx
+
+[DEBUG] Resources cleaned: message_free(msg) called.
+[DEBUG] --- End of handle_message ---
+
+[DEBUG] Message handled and finished.
+[DEBUG] Message received successfully. Raw size: 54 bytes
+[DEBUG] --- New Message Received ---
+[DEBUG] Size: 54 bytes
+[DEBUG] Message Type: payment_sig
+[DEBUG] Executing handler...
+[DEBUG] Successfully finished executing: payment_sig
+
+[DEBUG] Resources cleaned: message_free(msg) called.
+[DEBUG] --- End of handle_message ---
+
+[DEBUG] Message handled and finished.
+Puzzle solver time: 2.31384 sec
+Connecting to Bob...
+
+Puzzle solver and solution share time: 2.31511 sec
+
+Total time of Alice: 131.82098 sec
+Finished executing puzzle_solution_share.
+
+[BOB] Hoàn thành thực thi puzzle_solution_share.
+
+===================
+
+Puzzle promise and soluton time: 40.72513 sec
+Finished executing payment_presig.
+
+[TUMBLER] Hoàn thành thực thi payment_presig.
+
+===================
+[WRAPPER] Khởi tạo tiến trình Tumbler...
+===================
+[WRAPPER] Khởi tạo tiến trình Alice...
+===================
+[WRAPPER] Khởi tạo tiến trình Bob...
+===================
+[WRAPPER] Đang chờ Bob hoàn thành giao dịch...
+===================
+[WRAPPER] Bob đã tiến trình xong. Đang gửi tín hiệu SIGINT để tắt Tumbler...
+===================
+[WRAPPER] Mạng lưới kết thúc thành công!
+===================

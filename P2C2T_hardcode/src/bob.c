@@ -944,14 +944,72 @@ int puzzle_solution_share_handler(bob_state_t state, void *socet, uint8_t *data)
     if(bn_cmp(s2, q) == RLC_GT) {
       bn_sub(state->sigma_b_t_hat->s, q, state->sigma_b_t_hat->s);
     }
+
+    printf("[BOB:debug] ECDSA verify inputs: =================\n");
+    printf("  - sizeof(tx): %zu\n", sizeof(tx));
+    printf("  - tx (hex): ");
+    for (size_t i = 0; i < sizeof(tx); i++) {
+      printf("%02X", tx[i]);
+    }
+    printf("\n");
+    printf("  - sigma.r:\n");
+    bn_print(state->sigma_b_t_hat->r);
+    printf("  - sigma.s:\n");
+    bn_print(state->sigma_b_t_hat->s);
+    printf("  - bob_tumbler_ec_pk:\n");
+    ec_print(state->bob_tumbler_ec_pk->pk);
+
     // Verify the completed signature.
     // if (cp_ecdsa_ver(state->sigma_b_t_hat->r, state->sigma_b_t_hat->s, tx, sizeof(tx), 0, state->bob_tumbler_ec_pk->pk) != 1) {
     //   RLC_THROW(ERR_CAUGHT);
     // }
-    char *e_bob_tumbler_str = "30339892255886429080278287994388261086762710422193244105614574981527490633799";
-    if (0) {
+    // Serialize BN/EC types before printing in hex. Direct indexing on bn_t/ec_t is invalid.
+  printf("==============================> [DEBUG] ECDSA Verification Start\n");
+  uint8_t r_bin[RLC_BN_SIZE];
+  uint8_t s_bin[RLC_BN_SIZE];
+  uint8_t pk_bin[RLC_EC_SIZE_COMPRESSED];
+
+  bn_write_bin(r_bin, RLC_BN_SIZE, state->sigma_b_t_hat->r);
+  bn_write_bin(s_bin, RLC_BN_SIZE, state->sigma_b_t_hat->s);
+  ec_norm(state->bob_tumbler_ec_pk->pk, state->bob_tumbler_ec_pk->pk);
+  ec_write_bin(pk_bin, RLC_EC_SIZE_COMPRESSED, state->bob_tumbler_ec_pk->pk, 1);
+
+  // printf("[DEBUG] Signature r: ");
+  // for (size_t i = 0; i < RLC_BN_SIZE; i++) printf("%02x", r_bin[i]);
+  printf("\n");
+  printf("[DEBUG] Signature r (BN): ");
+  bn_print(state->sigma_b_t_hat->r);
+  // printf("[DEBUG] Signature s: ");
+  // for (size_t i = 0; i < RLC_BN_SIZE; i++) printf("%02x", s_bin[i]);
+  printf("\n");
+  printf("[DEBUG] Signature s (BN): ");
+  bn_print(state->sigma_b_t_hat->s);
+
+  // 2. In dữ liệu tx (thông điệp/hash)
+  printf("[DEBUG] Transaction Hash (tx): ");
+  for (size_t i = 0; i < sizeof(tx); i++) printf("%02x", tx[i]);
+  printf("\n");
+
+  // 3. In Public Key (compressed EC encoding)
+  printf("[DEBUG] Public Key (pk):======= [DEBUG]");
+  bn_print(state->bob_tumbler_ec_pk->pk);
+  printf("[DEBUG]======== Public Key (pk)[DEBUG]");
+
+  printf("\n");
+
+
+  
+  char *e_bob_tumbler_str = "30339892255886429080278287994388261086762710422193244105614574981527490633799";
+  if (cp_ecdsa_ver_for_2as(state->sigma_b_t_hat->r, state->sigma_b_t_hat->s, e_bob_tumbler_str, state->bob_tumbler_ec_pk->pk) != 1) {
       RLC_THROW(ERR_CAUGHT);
-    }
+    
+
+  }
+  
+
+  // if (0) {
+  //     RLC_THROW(ERR_CAUGHT);
+  // }
     printf("r of 2AS in bob.c:\n");
     bn_print(state->sigma_b_t_hat->r);
     printf("s of 2AS in bob.c:\n");
@@ -963,7 +1021,7 @@ int puzzle_solution_share_handler(bob_state_t state, void *socet, uint8_t *data)
   } RLC_FINALLY {
     bn_free(x);
     bn_free(q);
-    bn_free(alpha)
+    bn_free(alpha);
     bn_free(alpha_hat);
     bn_free(alpha_inverse);
     bn_free(beta_inverse);
