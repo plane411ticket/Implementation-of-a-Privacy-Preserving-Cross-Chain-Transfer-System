@@ -1659,11 +1659,8 @@ int main(void)
   RLC_TRY {
     tumbler_state_new(state);
     
-<<<<<<< HEAD
-    bn_new(q);
-=======
-    bn_new(q); ec_curve_get_ord(q);
->>>>>>> c8833183165e502fe94b49a061902d4a140a1a10
+
+    bn_new(q); 
     ec_curve_get_ord(q);
     bn_new(r);
     bn_new(s);
