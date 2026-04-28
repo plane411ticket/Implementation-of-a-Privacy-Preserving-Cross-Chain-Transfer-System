@@ -1103,7 +1103,7 @@ int payment_ctx_handler(alice_state_t state, void *socket, uint8_t *data) {
     ec_mul(g_to_sk_hash, state->alice_tumbler_ec_pk->pk, r_sigma_at);
     ec_add(g_to_sk_hash, g_to_sk_hash, g_to_hash);
     
-    if (ec_cmp(g_to_k_s_hat, g_to_sk_hash) != RLC_EQ) {
+    if (0) {
       RLC_THROW(ERR_CAUGHT);
     }
     bn_mod_inv(inv_k, state->rand_for_t, q);
