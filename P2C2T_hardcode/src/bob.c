@@ -60,14 +60,20 @@ int handle_message(bob_state_t state, void *socket, zmq_msg_t message) {
 
   RLC_TRY {
     printf("Received message size: %ld bytes\n", zmq_msg_size(&message));
+    printf("[BOB] Đã nhận tin nhắn %ld bytes\n", zmq_msg_size(&message));
+    printf("===================\n");
     deserialize_message(&msg, (uint8_t *) zmq_msg_data(&message));
 
     printf("Executing %s...\n", msg->type);
+    printf("[BOB] Đang thực thi %s...\n", msg->type);
+    printf("===================\n");
     msg_handler_t msg_handler = get_message_handler(msg->type);
     if (msg_handler(state, socket, msg->data) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
     printf("Finished executing %s.\n\n", msg->type);
+    printf("[BOB] Hoàn thành thực thi %s.\n\n", msg->type);
+    printf("===================\n");
   } RLC_CATCH_ANY {
     result_status = RLC_ERR;
   } RLC_FINALLY {
@@ -104,8 +110,12 @@ int receive_message(bob_state_t state, void *socket) {
 
 int token_share_handler(bob_state_t state, void *socet, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:token_share_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:token_share_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
 
@@ -129,9 +139,12 @@ int token_share_handler(bob_state_t state, void *socet, uint8_t *data) {
 
 int promise_init(bob_state_t state, void *socket) {
   if (state == NULL) {
+    fprintf(stderr, "[BOB:promise_init] Lỗi: state bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
-
+  printf("[BOB:promise_init] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
   size_t v_bytes;  
@@ -234,7 +247,9 @@ int promise_init(bob_state_t state, void *socket) {
 
     if (pi_lhtlp_range_gen(lhtlp_ranges, puzzles, state->lhtlp_param, sk_shares, rands, BITS_STATISTIC_PARAM, N_2, interval_L) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
-    }      
+    } 
+    
+       
     // Compute CL encryption secret/public key pair for the bob.
 	state->bob_cl_sk->sk = randomi(state->cl_params->bound);  // hoặc strtoi nhỏ để test
 
@@ -243,10 +258,22 @@ int promise_init(bob_state_t state, void *socket) {
 	state->cl_params->g_q, state->bob_cl_sk->sk, state->cl_params->q);
 
 	// Powering: truyền NULL cho mod để dùng đúng cho Qfb
-	state->bob_cl_pk->pk = nupow(state->cl_params->g_q, state->bob_cl_sk->sk, NULL);
+	
+	printf("[BOB:promise_init] Chuan bi goi nupow(g_q, sk, NULL)...\n");
+	
+	printf("[BOB:promise_init] Chuan bi goi nupow(g_q, sk, NULL)...\n");
+	state->bob_cl_pk->pk = nupow(state->cl_params->g_q, state->bob_cl_sk->sk, NULL); 
+	printf("[BOB:promise_init] Da goi nupow thanh cong.\n");
+
+	printf("[BOB:promise_init] Da goi nupow thanh cong.\n");
+
 
 	// Reduce form (rất nên, để pk gọn và chuẩn canonical trong CL)
+	
+	printf("[BOB:promise_init] Chuan bi goi qfbred()...\n");
 	state->bob_cl_pk->pk = qfbred(state->bob_cl_pk->pk);
+	printf("[BOB:promise_init] Da goi qfbred thanh cong.\n");
+
 
 	// Debug kết quả pk
 	pari_printf("Debug: pk = %Ps\n", state->bob_cl_pk->pk);
@@ -405,8 +432,12 @@ int promise_init(bob_state_t state, void *socket) {
 
 int promise_com_handler(bob_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:promise_com_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:promise_com_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
@@ -536,8 +567,12 @@ int promise_com_handler(bob_state_t state, void *socket, uint8_t *data) {
 
 int promise_decom_handler(bob_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:promise_decom_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:promise_decom_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
@@ -635,7 +670,7 @@ int promise_decom_handler(bob_state_t state, void *socket, uint8_t *data) {
       RLC_THROW(ERR_CAUGHT);
     }
     
-    // Decrypt the ciphertext.
+
     GEN s_hat_from_t;
     if (cl_dec(&s_hat_from_t, ctx_s_hat, state->bob_cl_sk, state->cl_params) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
@@ -730,8 +765,13 @@ int promise_decom_handler(bob_state_t state, void *socket, uint8_t *data) {
 
 int promise_over_handler(bob_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:promise_over_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:promise_over_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
+
   PROMISE_COMPLETED = 1;
 
   return RLC_OK;
@@ -739,8 +779,12 @@ int promise_over_handler(bob_state_t state, void *socket, uint8_t *data) {
 
 int puzzle_share(bob_state_t state, void *socket) {
   if (state == NULL) {
+    fprintf(stderr, "[BOB:puzzle_share] Lỗi: state bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:puzzle_share] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
   
   int result_status = RLC_OK;
   uint8_t *serialized_message = NULL;
@@ -832,8 +876,12 @@ int puzzle_share(bob_state_t state, void *socket) {
 
 int puzzle_share_done_handler(bob_state_t state, void *socket, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:puzzle_share_done_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:puzzle_share_done_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   PUZZLE_SHARED = 1;
   return RLC_OK;
@@ -841,8 +889,12 @@ int puzzle_share_done_handler(bob_state_t state, void *socket, uint8_t *data) {
 
 int puzzle_solution_share_handler(bob_state_t state, void *socet, uint8_t *data) {
   if (state == NULL || data == NULL) {
+    fprintf(stderr, "[BOB:puzzle_solution_share_handler] Lỗi: state hoặc data bị NULL.\n");
+    fprintf(stderr, "===================\n");
     RLC_THROW(ERR_NO_VALID);
   }
+  printf("[BOB:puzzle_solution_share_handler] Đã bắt đầu thực thi...\n");
+  printf("===================\n");
 
   int result_status = RLC_OK;
 
@@ -923,7 +975,18 @@ int puzzle_solution_share_handler(bob_state_t state, void *socet, uint8_t *data)
 
 int main(void)
 {
-  init();
+  // init();
+  // 1. Tính toán dung lượng Stack cần để parse các params lớn 
+    // Cơ bản: cấp 2MB cho overhead. Cộng thêm 1MB cho mỗi BITS_STATISTIC_PARAM loop.
+    size_t base_stack = 2000000; 
+    size_t stack_per_param = 1000000; 
+    size_t required_stack = base_stack + (BITS_STATISTIC_PARAM * stack_per_param);
+    
+    // Giới hạn max prime vừa phải, không cần thiết cho ZKDL lớn
+    size_t required_maxprime = 500000; 
+
+    // Mở hệ thống
+    init(required_stack, required_maxprime);
   int result_status = RLC_OK;
   PROMISE_COMPLETED = 0;
   PUZZLE_SHARED = 0;
@@ -959,7 +1022,9 @@ int main(void)
     if (generate_cl_params(state->cl_params) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-    /**
+    
+    
+    /*
     if (read_keys_from_file_alice_bob(BOB_KEY_FILE_PREFIX,
                                       state->bob_ec_sk,
                                       state->bob_ec_pk,
@@ -968,18 +1033,43 @@ int main(void)
                                       state->tumbler_cl_pk) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-    **/
+    */
+    
+    
     bn_read_str(state->bob_ec_sk->sk, "D5428B52D9145EE5B51CEB5B1E0D382188E428BC79B45C2D034BA956BB84B316", strlen("D5428B52D9145EE5B51CEB5B1E0D382188E428BC79B45C2D034BA956BB84B316"), 16);
+    bn_t q;
+    bn_null(q);
+    bn_new(q);
+    ec_curve_get_ord(q);
+    bn_mod_basic(state->bob_ec_sk->sk, state->bob_ec_sk->sk, q);
     printf("**sk_r:\n");
     bn_print(state->bob_ec_sk->sk); 
     ec_mul_gen(state->bob_ec_pk->pk, state->bob_ec_sk->sk);
+
+    // Hardcode Tumbler keys in Bob
+    bn_t t_ec_sk; bn_null(t_ec_sk); bn_new(t_ec_sk);
+    bn_read_str(t_ec_sk, "AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991", strlen("AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991"), 16);
+    bn_mod_basic(t_ec_sk, t_ec_sk, q);
+    ec_mul_gen(state->tumbler_ec_pk->pk, t_ec_sk);
+    bn_free(t_ec_sk);
+
+    bn_t ps_x, ps_y; bn_null(ps_x); bn_new(ps_x); bn_null(ps_y); bn_new(ps_y);
+    bn_read_str(ps_x, "1234567890ABCDEF", 16, 16); bn_mod_basic(ps_x, ps_x, q);
+    bn_read_str(ps_y, "FEDCBA0987654321", 16, 16); bn_mod_basic(ps_y, ps_y, q);
+    g1_mul_gen(state->tumbler_ps_pk->Y_1, ps_y);
+    g2_mul_gen(state->tumbler_ps_pk->X_2, ps_x);
+    g2_mul_gen(state->tumbler_ps_pk->Y_2, ps_y);
+    bn_free(ps_x); bn_free(ps_y);
+
+    GEN cl_sk_t = strtoi("1234567890");
+    state->tumbler_cl_pk->pk = nupow(state->cl_params->g_q, cl_sk_t, NULL);
 
         
     while (!TOKEN_RECEIVED) {
       if (receive_message(state, socket) != RLC_OK) {
         RLC_THROW(ERR_CAUGHT);
       }
-    }
+    }    
 
     rc = zmq_close(socket);
     if (rc != 0) {

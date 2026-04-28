@@ -12,6 +12,17 @@ unsigned REGISTRATION_COMPLETED;
 unsigned PUZZLE_SHARED;
 unsigned PUZZLE_SOLVED;
 
+/*
+ * Hàm: get_message_type
+ * Mục đích: Map từ khóa dạng chuỗi của tin nhắn lấy được thành một mã integer đã định nghĩa
+ *           để dễ dàng sử dụng cho cấu trúc rẽ nhánh (switch-case).
+ *
+ * Tham số:
+ * - key: Chuỗi định danh của tin nhắn cần tra.
+ *
+ * Giá trị trả về:
+ * - integer code tương ứng với tin nhắn, hoặc -1 nếu không tìm thấy.
+ */
 int get_message_type(char *key) {
   for (size_t i = 0; i < TOTAL_MESSAGES; i++) {
     symstruct_t sym = msg_lookuptable[i];
@@ -22,6 +33,17 @@ int get_message_type(char *key) {
   return -1;
 }
 
+/*
+ * Hàm: get_message_handler
+ * Mục đích: Cung cấp con trỏ hàm xử lý thích hợp dựa vào chuỗi mã nhận dạng
+ *           của tin nhắn gửi đến Alice.
+ *
+ * Tham số:
+ * - key: Chuỗi định danh tin nhắn.
+ *
+ * Giá trị trả về:
+ * - msg_handler_t (con trỏ hàm xử lý logic tương ứng). Exit(1) nếu sai loại.
+ */
 msg_handler_t get_message_handler(char *key) {
   switch (get_message_type(key))
   {
@@ -49,6 +71,19 @@ msg_handler_t get_message_handler(char *key) {
   }
 }
 
+/*
+ * Hàm: handle_message
+ * Mục đích: Nhận, giải mã và phân phối gói tin ZMQ tới cho hàm xử lý tương ứng
+ *           trong tập hợp logic của mạng lưới P2C2T cho Alice. Đo lường kích thước.
+ *
+ * Tham số:
+ * - state: Trạng thái hiện tại của Alice (chứa key, params, trạng thái protocol...).
+ * - socket: Con trỏ tới socket ZMQ đang nhận tin.
+ * - message: Dữ liệu raw của gói tin ZMQ đã bắt vào.
+ *
+ * Giá trị trả về:
+ * - int: Mã lỗi RELIC (RLC_OK / RLC_ERR).
+ */
 int handle_message(alice_state_t state, void *socket, zmq_msg_t message) {
   int result_status = RLC_OK;
 
@@ -56,90 +91,191 @@ int handle_message(alice_state_t state, void *socket, zmq_msg_t message) {
   message_null(msg);
 
   RLC_TRY {
-    printf("Received message size: %ld bytes\n", zmq_msg_size(&message));
-    deserialize_message(&msg, (uint8_t *) zmq_msg_data(&message));
+    size_t msg_size = zmq_msg_size(&message);
+    printf("[DEBUG] --- New Message Received ---\n");
+    printf("[DEBUG] Size: %zu bytes\n", msg_size);
 
-    printf("Executing %s...\n", msg->type);
-    msg_handler_t msg_handler = get_message_handler(msg->type);
-    if (msg_handler(state, socket, msg->data) != RLC_OK) {
+    // Giải mã tin nhắn
+    deserialize_message(&msg, (uint8_t *) zmq_msg_data(&message));
+    
+    if (msg == NULL) {
+      printf("[ERROR] Deserialization failed: msg is NULL\n");
       RLC_THROW(ERR_CAUGHT);
     }
-    printf("Finished executing %s.\n\n", msg->type);
+
+    if (msg->type == NULL) {
+      printf("[ERROR] Message type is missing!\n");
+      RLC_THROW(ERR_CAUGHT);
+    }
+
+    printf("[DEBUG] Message Type: %s\n", msg->type);
+
+    // Lấy hàm xử lý tương ứng
+    msg_handler_t msg_handler = get_message_handler(msg->type);
+    
+    if (msg_handler == NULL) {
+      printf("[ERROR] No handler found for type: %s\n", msg->type);
+      RLC_THROW(ERR_CAUGHT);
+    }
+
+    // Thực thi handler
+    printf("[DEBUG] Executing handler...\n");
+    if (msg_handler(state, socket, msg->data) != RLC_OK) {
+      printf("[ERROR] Handler for '%s' failed (RLC_ERR).\n", msg->type);
+      RLC_THROW(ERR_CAUGHT);
+    }
+    
+    printf("[DEBUG] Successfully finished executing: %s\n\n", msg->type);
+
   } RLC_CATCH_ANY {
+    printf("[FATAL] Exception caught in handle_message!\n");
     result_status = RLC_ERR;
   } RLC_FINALLY {
-    if (msg != NULL) message_free(msg);
+    // Luôn dọn dẹp tài nguyên
+    if (msg != NULL) {
+      message_free(msg);
+      printf("[DEBUG] Resources cleaned: message_free(msg) called.\n");
+    }
+    printf("[DEBUG] --- End of handle_message ---\n\n");
   }
 
   return result_status;
 }
 
+/*
+ * Hàm: receive_message
+ * Mục đích: Vòng lặp chờ đợi ZMQ (không khoá - DONTWAIT) để lấy tin nhắn kế tiếp
+ *           khỏi đường truyền, khởi tạo wrapper ZMQ rồi đưa cho `handle_message`.
+ *
+ * Tham số:
+ * - state: Trạng thái hiện tại của Alice.
+ * - socket: ZMQ socket.
+ *
+ * Giá trị trả về:
+ * - int: RLC_OK hoặc RLC_ERR.
+ */
 int receive_message(alice_state_t state, void *socket) {
   int result_status = RLC_OK;
 
   zmq_msg_t message;
 
   RLC_TRY {
+    // 1. Khởi tạo message
     int rc = zmq_msg_init(&message);
     if (rc != 0) {
-      fprintf(stderr, "Error: could not initialize the message.\n");
+      fprintf(stderr, "[ERROR] Could not initialize zmq_msg_t. errno: %d\n", errno);
       RLC_THROW(ERR_CAUGHT);
     }
 
+    // 2. Nhận message (Sử dụng ZMQ_DONTWAIT nên cần check EAGAIN)
     rc = zmq_msg_recv(&message, socket, ZMQ_DONTWAIT);
-    if (rc != -1 && handle_message(state, socket, message) != RLC_OK) {
-      RLC_THROW(ERR_CAUGHT);
+    
+    if (rc == -1) {
+      if (errno == EAGAIN) {
+        // Đây là trường hợp bình thường khi không có tin nhắn nào trong queue
+        // printf("[DEBUG] No message available (EAGAIN).\n"); 
+      } else {
+        fprintf(stderr, "[ERROR] zmq_msg_recv failed with errno: %d\n", errno);
+        RLC_THROW(ERR_CAUGHT);
+      }
+    } else {
+      // Nhận tin nhắn thành công
+      printf("[DEBUG] Message received successfully. Raw size: %d bytes\n", rc);
+
+      // 3. Xử lý tin nhắn
+      if (handle_message(state, socket, message) != RLC_OK) {
+        printf("[ERROR] handle_message returned an error status.\n");
+        RLC_THROW(ERR_CAUGHT);
+      }
+      
+      printf("[DEBUG] Message handled and finished.\n");
     }
+
   } RLC_CATCH_ANY {
+    printf("[FATAL] Exception caught in receive_message!\n");
     result_status = RLC_ERR;
   } RLC_FINALLY {
+    // Luôn đóng message để tránh rò rỉ bộ nhớ
     zmq_msg_close(&message);
+    // printf("[DEBUG] zmq_msg_close called.\n");
   }
 
   return result_status;
 }
 
+/*
+ * Hàm: registration
+ * Mục đích: Bắt đầu tiến trình đăng ký của Alice với Tumbler. Gửi gói tin
+ *           `registration_z` kèm Alice's compressed EC public key cho đối tác.
+ *
+ * Tham số:
+ * - state: Trạng thái hiện tại chứa EC pk của Alice.
+ * - socket: ZMQ socket hướng đến Tumbler.
+ *
+ * Giá trị trả về:
+ * - int: RLC_OK hoặc RLC_ERR nếu thất bại khi serialize / gởi.
+ */
 int registration(alice_state_t state, void *socket) {
+  // Kiểm tra đầu vào, nếu state NULL thì ném lỗi
   if (state == NULL) {
     RLC_THROW(ERR_NO_VALID);
   }
 
-  int result_status = RLC_OK;
+  int result_status = RLC_OK; // Biến lưu trạng thái kết quả trả về của hàm
 
-  uint8_t *serialized_message = NULL;
-  message_t registration_msg;
+  uint8_t *serialized_message = NULL; // Con trỏ lưu trữ mảng byte của tin nhắn sau khi được serialize
+  message_t registration_msg; // Cấu trúc tin nhắn dùng để chứa loại (type) và dữ liệu (data)
 
   RLC_TRY {   
 
-    // Build and define the message.
+    // Tên tin nhắn (type) là "registration_z"
     char *msg_type = "registration_z";
+    // Tính toán chiều dài tên tin nhắn (bao gồm ký tự '\0')
     const unsigned msg_type_length = (unsigned) strlen(msg_type) + 1;
+    // Dữ liệu mã hóa sẽ có kích thước bằng với Public Key EC chuẩn (compressed size)
     const unsigned msg_data_length = RLC_EC_SIZE_COMPRESSED;
+    // Tổng chiều dài gói tin: loại + dữ liệu + hai giá trị metadata kiểu unsigned kích thước
     const int total_msg_length = msg_type_length + msg_data_length + (2 * sizeof(unsigned));
+    
+    // Khởi tạo cấu trúc tin nhắn cục bộ
     message_new(registration_msg, msg_type_length, msg_data_length);
+    
+    // Nén (compress) Public Key (pk) hệ Elliptic Curve của Alice thành dạng nhị phân,
+    // và ghi nó vào phần .data của gói tin
     ec_write_bin(registration_msg->data, RLC_EC_SIZE_COMPRESSED, state->alice_ec_pk->pk, 1);
-    // Serialize the message.
+    
+    // Copy chuỗi tên "registration_z" vào phần .type của gói tin
     memcpy(registration_msg->type, msg_type, msg_type_length);
+    
+    // Nối và biến đổi toàn bộ metadata struct thành một mảng byte thuần (serialize)
+    // để chuẩn bị gửi qua socket
     serialize_message(&serialized_message, registration_msg, msg_type_length, msg_data_length);
 
-    // Send the message.
+    // Bắt đầu quá trình ZMQ message passing
     zmq_msg_t registration_z;
+    // Cấp phát vùng nhớ cho gói ZMQ với đúng kích thước vừa tính
     int rc = zmq_msg_init_size(&registration_z, total_msg_length);
     if (rc < 0) {
       fprintf(stderr, "Error: could not initialize the message (%s).\n", msg_type);
       RLC_THROW(ERR_CAUGHT);
     }
 
+    // Sao chép mảng serialized_message vào payload data của ZMQ msg
     memcpy(zmq_msg_data(&registration_z), serialized_message, total_msg_length);
+    
+    // Gửi bất đồng bộ (không chờ - ZMQ_DONTWAIT) qua socket (truyền đến Tumbler)
     rc = zmq_msg_send(&registration_z, socket, ZMQ_DONTWAIT);
+    
+    // Nếu kích thước bytes gửi thành công không khớp kích thước khai báo, báo lỗi
     if (rc != total_msg_length) {
       fprintf(stderr, "Error: could not send the message (%s).\n", msg_type);
       RLC_THROW(ERR_CAUGHT);
     }
   
   } RLC_CATCH_ANY {
-    result_status = RLC_ERR;
+    result_status = RLC_ERR; // Bắt exceptions tử bất kì hàm lõi nào để trả RLC_ERR
   } RLC_FINALLY {
+    // Dọn dẹp con trỏ bộ nhớ động để tránh rò rỉ (memory leak) kể cả khi chương trình try lỗi hay thành công
     if (registration_msg != NULL) message_free(registration_msg);
     if (serialized_message != NULL) free(serialized_message);
   }
@@ -260,6 +396,7 @@ int registration_vtd_handler(alice_state_t state, void *socket, uint8_t *data) {
     // Deserialize the data from the message.
     for(int i = 0; i <BITS_STATISTIC_PARAM; i++)
     {      
+      printf("[ALICE] Doc puzzles[%d]->u\n", i);
       bn_read_bin(puzzles[i]->u, data  + (i * BYTES_MODULUS_RSA)  + (i * BYTES_MODULUS_RSA_2), BYTES_MODULUS_RSA);
       mpz_import(puzzles[i]->v, BYTES_MODULUS_RSA_2, 1, sizeof(unsigned char), 0, 0, data  + ((i+1) * BYTES_MODULUS_RSA)+ (i * BYTES_MODULUS_RSA_2));
     }
@@ -1118,7 +1255,18 @@ int puzzle_solution_share(alice_state_t state, void *socket) {
 
 int main(void)
 {
-  init();
+  // init();
+  // 1. Tính toán dung lượng Stack cần để parse các params lớn 
+    // Cơ bản: cấp 2MB cho overhead. Cộng thêm 1MB cho mỗi BITS_STATISTIC_PARAM loop.
+    size_t base_stack = 2000000; 
+    size_t stack_per_param = 1000000; 
+    size_t required_stack = base_stack + (BITS_STATISTIC_PARAM * stack_per_param);
+    
+    // Giới hạn max prime vừa phải, không cần thiết cho ZKDL lớn
+    size_t required_maxprime = 500000; 
+
+    // Mở hệ thống
+    init(required_stack, required_maxprime);
   int result_status = RLC_OK;
   REGISTRATION_COMPLETED = 0;
   PUZZLE_SHARED = 0;
@@ -1162,8 +1310,9 @@ int main(void)
     if (generate_cl_params(state->cl_params) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-
-    /**
+    
+    
+    /*
     if (read_keys_from_file_alice_bob(ALICE_KEY_FILE_PREFIX,
                                       state->alice_ec_sk,
                                       state->alice_ec_pk,
@@ -1172,12 +1321,35 @@ int main(void)
                                       state->tumbler_cl_pk) != RLC_OK) {
       RLC_THROW(ERR_CAUGHT);
     }
-    **/
+    */
+    
+    
 
     bn_read_str(state->alice_ec_sk->sk, "CC62414C758C52CE1A7B0ECE10BB8CAE753B63C1CEBD7F85A4FB57963B966462", strlen("CC62414C758C52CE1A7B0ECE10BB8CAE753B63C1CEBD7F85A4FB57963B966462"), 16);
+    bn_new(q);
+    ec_curve_get_ord(q);
+    bn_mod_basic(state->alice_ec_sk->sk, state->alice_ec_sk->sk, q);
     printf("**sk_s:\n");
     bn_print(state->alice_ec_sk->sk); 
     ec_mul_gen(state->alice_ec_pk->pk, state->alice_ec_sk->sk);
+
+    // Hardcode Tumbler keys in Alice
+    bn_t t_ec_sk; bn_null(t_ec_sk); bn_new(t_ec_sk);
+    bn_read_str(t_ec_sk, "AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991", strlen("AC5FF9E96D83824C04C276D69E52F8330F16F82F0244D3D49827F109F1310991"), 16);
+    bn_mod_basic(t_ec_sk, t_ec_sk, q);
+    ec_mul_gen(state->tumbler_ec_pk->pk, t_ec_sk);
+    bn_free(t_ec_sk);
+
+    bn_t ps_x, ps_y; bn_null(ps_x); bn_new(ps_x); bn_null(ps_y); bn_new(ps_y);
+    bn_read_str(ps_x, "1234567890ABCDEF", 16, 16); bn_mod_basic(ps_x, ps_x, q);
+    bn_read_str(ps_y, "FEDCBA0987654321", 16, 16); bn_mod_basic(ps_y, ps_y, q);
+    g1_mul_gen(state->tumbler_ps_pk->Y_1, ps_y);
+    g2_mul_gen(state->tumbler_ps_pk->X_2, ps_x);
+    g2_mul_gen(state->tumbler_ps_pk->Y_2, ps_y);
+    bn_free(ps_x); bn_free(ps_y);
+
+    GEN cl_sk_t = strtoi("1234567890");
+    state->tumbler_cl_pk->pk = nupow(state->cl_params->g_q, cl_sk_t, NULL);
 
     start_time = ttimer();
     if (registration(state, socket) != RLC_OK) {

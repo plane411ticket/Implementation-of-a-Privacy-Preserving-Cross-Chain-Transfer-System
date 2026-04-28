@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nndd411/blockchain/ptoctot/P2C2T_hardcode
+CMAKE_SOURCE_DIR = /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build
+CMAKE_BINARY_DIR = /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build
 
 # Include any dependencies generated for this target.
 include src/CMakeFiles/bob.dir/depend.make
@@ -70,32 +70,32 @@ include src/CMakeFiles/bob.dir/progress.make
 include src/CMakeFiles/bob.dir/flags.make
 
 src/CMakeFiles/bob.dir/bob.c.o: src/CMakeFiles/bob.dir/flags.make
-src/CMakeFiles/bob.dir/bob.c.o: /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/bob.c
+src/CMakeFiles/bob.dir/bob.c.o: /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/bob.c
 src/CMakeFiles/bob.dir/bob.c.o: src/CMakeFiles/bob.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object src/CMakeFiles/bob.dir/bob.c.o"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/bob.dir/bob.c.o -MF CMakeFiles/bob.dir/bob.c.o.d -o CMakeFiles/bob.dir/bob.c.o -c /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/bob.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object src/CMakeFiles/bob.dir/bob.c.o"
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/bob.dir/bob.c.o -MF CMakeFiles/bob.dir/bob.c.o.d -o CMakeFiles/bob.dir/bob.c.o -c /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/bob.c
 
 src/CMakeFiles/bob.dir/bob.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/bob.dir/bob.c.i"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/bob.c > CMakeFiles/bob.dir/bob.c.i
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/bob.c > CMakeFiles/bob.dir/bob.c.i
 
 src/CMakeFiles/bob.dir/bob.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/bob.dir/bob.c.s"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/bob.c -o CMakeFiles/bob.dir/bob.c.s
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/bob.c -o CMakeFiles/bob.dir/bob.c.s
 
 src/CMakeFiles/bob.dir/util.c.o: src/CMakeFiles/bob.dir/flags.make
-src/CMakeFiles/bob.dir/util.c.o: /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c
+src/CMakeFiles/bob.dir/util.c.o: /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c
 src/CMakeFiles/bob.dir/util.c.o: src/CMakeFiles/bob.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object src/CMakeFiles/bob.dir/util.c.o"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/bob.dir/util.c.o -MF CMakeFiles/bob.dir/util.c.o.d -o CMakeFiles/bob.dir/util.c.o -c /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object src/CMakeFiles/bob.dir/util.c.o"
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/bob.dir/util.c.o -MF CMakeFiles/bob.dir/util.c.o.d -o CMakeFiles/bob.dir/util.c.o -c /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c
 
 src/CMakeFiles/bob.dir/util.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/bob.dir/util.c.i"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c > CMakeFiles/bob.dir/util.c.i
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c > CMakeFiles/bob.dir/util.c.i
 
 src/CMakeFiles/bob.dir/util.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/bob.dir/util.c.s"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c -o CMakeFiles/bob.dir/util.c.s
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c -o CMakeFiles/bob.dir/util.c.s
 
 # Object files for target bob
 bob_OBJECTS = \
@@ -105,26 +105,26 @@ bob_OBJECTS = \
 # External object files for target bob
 bob_EXTERNAL_OBJECTS =
 
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob: src/CMakeFiles/bob.dir/bob.c.o
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob: src/CMakeFiles/bob.dir/util.c.o
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob: src/CMakeFiles/bob.dir/build.make
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob: /usr/local/lib/librelic.so
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob: /usr/local/lib/libpari.so
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob: /usr/lib/x86_64-linux-gnu/libgmp.so
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob: /usr/lib/x86_64-linux-gnu/libzmq.so
-/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob: src/CMakeFiles/bob.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob"
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/bob.dir/link.txt --verbose=$(VERBOSE)
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob: src/CMakeFiles/bob.dir/bob.c.o
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob: src/CMakeFiles/bob.dir/util.c.o
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob: src/CMakeFiles/bob.dir/build.make
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob: /usr/local/lib/librelic.so
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob: /usr/local/lib/libpari.so
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob: /usr/lib/x86_64-linux-gnu/libgmp.so
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob: /usr/lib/x86_64-linux-gnu/libzmq.so
+/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob: src/CMakeFiles/bob.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob"
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/bob.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-src/CMakeFiles/bob.dir/build: /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob
+src/CMakeFiles/bob.dir/build: /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob
 .PHONY : src/CMakeFiles/bob.dir/build
 
 src/CMakeFiles/bob.dir/clean:
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src && $(CMAKE_COMMAND) -P CMakeFiles/bob.dir/cmake_clean.cmake
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src && $(CMAKE_COMMAND) -P CMakeFiles/bob.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/bob.dir/clean
 
 src/CMakeFiles/bob.dir/depend:
-	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nndd411/blockchain/ptoctot/P2C2T_hardcode /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src/CMakeFiles/bob.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src/CMakeFiles/bob.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : src/CMakeFiles/bob.dir/depend
 
