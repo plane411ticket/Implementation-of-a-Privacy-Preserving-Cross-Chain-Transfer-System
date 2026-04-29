@@ -1,3 +1,11 @@
+# =============================================================================
+# PHASE 1: SYSTEM SETUP
+# -----------------------------------------------------------------------------
+# Initialize the cross-chain transfer environment.
+# Derive joint public keys (joint_pk) and generate shared addresses
+# between sender-hub (Bitcoin testnet) and hub-receiver (Litecoin testnet).
+# Output: shared addresses ready to receive locked funds.
+# =============================================================================
 from cryptos import *
 
 def main():

@@ -1,3 +1,11 @@
+# =============================================================================
+# PHASE 2: TRANSFER LOCK
+# -----------------------------------------------------------------------------
+# Commit funds into the shared addresses.
+# Sender locks BTC into the sender-hub shared address.
+# Hub locks LTC into the hub-receiver shared address.
+# Output: funds locked on-chain, awaiting transfer authorization.
+# =============================================================================
 from cryptos import *
 import hashlib
 

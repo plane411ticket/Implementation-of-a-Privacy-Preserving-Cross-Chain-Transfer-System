@@ -1,3 +1,11 @@
+/*
+ * PHASE 5: TRANSFER COMPLETION
+ * ----------------------------
+ * Pr (bob)  runs ΠTA2L.Open(τ, sr) to obtain transfer signature σtrans_r from bob.c.
+ * Pr (bob)  posts transfer transaction (txtrans_r, σtrans_r) on B2 to withdraw y coins.
+ * Output: (r, s) from bob.c verified and broadcast to LTC testnet.
+ *         Cross-chain transfer finalized on both B1 (BTC) and B2 (LTC).
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

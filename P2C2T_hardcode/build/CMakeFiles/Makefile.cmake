@@ -7,10 +7,10 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/CMakeLists.txt"
+  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/CMakeLists.txt"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeSystem.cmake"
-  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/CMakeLists.txt"
+  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/CMakeLists.txt"
   "/usr/share/cmake-3.28/Modules/CMakeCCompiler.cmake.in"
   "/usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c"
   "/usr/share/cmake-3.28/Modules/CMakeCInformation.cmake"

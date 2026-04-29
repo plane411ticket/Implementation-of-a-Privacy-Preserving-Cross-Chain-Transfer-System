@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/alice.c" "src/CMakeFiles/alice.dir/alice.c.o" "gcc" "src/CMakeFiles/alice.dir/alice.c.o.d"
-  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c" "src/CMakeFiles/alice.dir/util.c.o" "gcc" "src/CMakeFiles/alice.dir/util.c.o.d"
+  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/alice.c" "src/CMakeFiles/alice.dir/alice.c.o" "gcc" "src/CMakeFiles/alice.dir/alice.c.o.d"
+  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c" "src/CMakeFiles/alice.dir/util.c.o" "gcc" "src/CMakeFiles/alice.dir/util.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

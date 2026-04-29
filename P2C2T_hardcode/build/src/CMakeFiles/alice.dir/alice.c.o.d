@@ -1,5 +1,5 @@
 src/CMakeFiles/alice.dir/alice.c.o: \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/alice.c \
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/alice.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -139,8 +139,8 @@ src/CMakeFiles/alice.dir/alice.c.o: \
  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/include/alice.h \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/include/types.h \
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/include/alice.h \
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/include/types.h \
  /usr/include/x86_64-linux-gnu/gmp.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
@@ -150,5 +150,5 @@ src/CMakeFiles/alice.dir/alice.c.o: \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h \
  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/include/types.h \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/include/util.h
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/include/types.h \
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/include/util.h

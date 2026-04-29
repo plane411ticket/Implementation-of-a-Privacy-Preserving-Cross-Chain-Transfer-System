@@ -1,5 +1,5 @@
 src/CMakeFiles/tumbler.dir/util.c.o: \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/util.c \
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/util.c \
  /usr/include/stdc-predef.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -135,7 +135,7 @@ src/CMakeFiles/tumbler.dir/util.c.o: \
  /usr/local/include/pari/parinf.h /usr/local/include/pari/paritune.h \
  /usr/local/include/pari/parimt.h /usr/local/include/pari/mpinl.h \
  /usr/local/include/pari/pariinl.h /usr/local/include/pari/pariold.h \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/include/types.h \
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/include/types.h \
  /usr/include/x86_64-linux-gnu/gmp.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
@@ -145,5 +145,5 @@ src/CMakeFiles/tumbler.dir/util.c.o: \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h \
  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/include/util.h \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/include/types.h
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/include/util.h \
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/include/types.h

@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode
+CMAKE_SOURCE_DIR = /home/nndd411/blockchain/ptoctot/P2C2T_hardcode
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build
+CMAKE_BINARY_DIR = /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/src//CMakeFiles/progress.marks
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build/CMakeFiles 0
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/src//CMakeFiles/progress.marks
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/clean
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 src/CMakeFiles/alice.dir/rule:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/alice.dir/rule
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/alice.dir/rule
 .PHONY : src/CMakeFiles/alice.dir/rule
 
 # Convenience name for target.
@@ -127,12 +127,12 @@ alice: src/CMakeFiles/alice.dir/rule
 
 # fast build rule for target.
 alice/fast:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/build
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/build
 .PHONY : alice/fast
 
 # Convenience name for target.
 src/CMakeFiles/bob.dir/rule:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/bob.dir/rule
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/bob.dir/rule
 .PHONY : src/CMakeFiles/bob.dir/rule
 
 # Convenience name for target.
@@ -141,12 +141,12 @@ bob: src/CMakeFiles/bob.dir/rule
 
 # fast build rule for target.
 bob/fast:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/build
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/build
 .PHONY : bob/fast
 
 # Convenience name for target.
 src/CMakeFiles/tumbler.dir/rule:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/tumbler.dir/rule
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/tumbler.dir/rule
 .PHONY : src/CMakeFiles/tumbler.dir/rule
 
 # Convenience name for target.
@@ -155,12 +155,12 @@ tumbler: src/CMakeFiles/tumbler.dir/rule
 
 # fast build rule for target.
 tumbler/fast:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/build
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/build
 .PHONY : tumbler/fast
 
 # Convenience name for target.
 src/CMakeFiles/wrapper.dir/rule:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/wrapper.dir/rule
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/wrapper.dir/rule
 .PHONY : src/CMakeFiles/wrapper.dir/rule
 
 # Convenience name for target.
@@ -169,7 +169,7 @@ wrapper: src/CMakeFiles/wrapper.dir/rule
 
 # fast build rule for target.
 wrapper/fast:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/build
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/build
 .PHONY : wrapper/fast
 
 alice.o: alice.c.o
@@ -177,7 +177,7 @@ alice.o: alice.c.o
 
 # target to build an object file
 alice.c.o:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/alice.c.o
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/alice.c.o
 .PHONY : alice.c.o
 
 alice.i: alice.c.i
@@ -185,7 +185,7 @@ alice.i: alice.c.i
 
 # target to preprocess a source file
 alice.c.i:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/alice.c.i
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/alice.c.i
 .PHONY : alice.c.i
 
 alice.s: alice.c.s
@@ -193,7 +193,7 @@ alice.s: alice.c.s
 
 # target to generate assembly for a file
 alice.c.s:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/alice.c.s
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/alice.c.s
 .PHONY : alice.c.s
 
 bob.o: bob.c.o
@@ -201,7 +201,7 @@ bob.o: bob.c.o
 
 # target to build an object file
 bob.c.o:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/bob.c.o
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/bob.c.o
 .PHONY : bob.c.o
 
 bob.i: bob.c.i
@@ -209,7 +209,7 @@ bob.i: bob.c.i
 
 # target to preprocess a source file
 bob.c.i:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/bob.c.i
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/bob.c.i
 .PHONY : bob.c.i
 
 bob.s: bob.c.s
@@ -217,7 +217,7 @@ bob.s: bob.c.s
 
 # target to generate assembly for a file
 bob.c.s:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/bob.c.s
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/bob.c.s
 .PHONY : bob.c.s
 
 tumbler.o: tumbler.c.o
@@ -225,7 +225,7 @@ tumbler.o: tumbler.c.o
 
 # target to build an object file
 tumbler.c.o:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/tumbler.c.o
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/tumbler.c.o
 .PHONY : tumbler.c.o
 
 tumbler.i: tumbler.c.i
@@ -233,7 +233,7 @@ tumbler.i: tumbler.c.i
 
 # target to preprocess a source file
 tumbler.c.i:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/tumbler.c.i
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/tumbler.c.i
 .PHONY : tumbler.c.i
 
 tumbler.s: tumbler.c.s
@@ -241,7 +241,7 @@ tumbler.s: tumbler.c.s
 
 # target to generate assembly for a file
 tumbler.c.s:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/tumbler.c.s
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/tumbler.c.s
 .PHONY : tumbler.c.s
 
 util.o: util.c.o
@@ -249,9 +249,9 @@ util.o: util.c.o
 
 # target to build an object file
 util.c.o:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/util.c.o
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/util.c.o
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/util.c.o
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/util.c.o
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/util.c.o
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/util.c.o
 .PHONY : util.c.o
 
 util.i: util.c.i
@@ -259,9 +259,9 @@ util.i: util.c.i
 
 # target to preprocess a source file
 util.c.i:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/util.c.i
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/util.c.i
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/util.c.i
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/util.c.i
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/util.c.i
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/util.c.i
 .PHONY : util.c.i
 
 util.s: util.c.s
@@ -269,9 +269,9 @@ util.s: util.c.s
 
 # target to generate assembly for a file
 util.c.s:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/util.c.s
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/util.c.s
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/util.c.s
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/alice.dir/build.make src/CMakeFiles/alice.dir/util.c.s
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bob.dir/build.make src/CMakeFiles/bob.dir/util.c.s
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tumbler.dir/build.make src/CMakeFiles/tumbler.dir/util.c.s
 .PHONY : util.c.s
 
 wrapper.o: wrapper.c.o
@@ -279,7 +279,7 @@ wrapper.o: wrapper.c.o
 
 # target to build an object file
 wrapper.c.o:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/wrapper.c.o
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/wrapper.c.o
 .PHONY : wrapper.c.o
 
 wrapper.i: wrapper.c.i
@@ -287,7 +287,7 @@ wrapper.i: wrapper.c.i
 
 # target to preprocess a source file
 wrapper.c.i:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/wrapper.c.i
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/wrapper.c.i
 .PHONY : wrapper.c.i
 
 wrapper.s: wrapper.c.s
@@ -295,7 +295,7 @@ wrapper.s: wrapper.c.s
 
 # target to generate assembly for a file
 wrapper.c.s:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/wrapper.c.s
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/wrapper.dir/build.make src/CMakeFiles/wrapper.dir/wrapper.c.s
 .PHONY : wrapper.c.s
 
 # Help Target
@@ -336,6 +336,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

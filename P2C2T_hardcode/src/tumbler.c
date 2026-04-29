@@ -1,3 +1,11 @@
+/*
+ * PHASE 4: PUZZLE SOLVING
+ * -----------------------
+ * Ps and Ph run ΠTA2L.Solving to produce two-party adaptor signature (r, s).
+ * Ph posts transfer transaction (txtrans_h1, σtrans_h1) on B1 to withdraw x coins.
+ * Ps obtains solution sr to puzzle τ and transmits it to Pr.
+ * Output: (r, s) from tumbler.c verified and broadcast to BTC testnet.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

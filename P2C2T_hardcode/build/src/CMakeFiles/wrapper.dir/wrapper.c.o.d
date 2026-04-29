@@ -1,5 +1,5 @@
 src/CMakeFiles/wrapper.dir/wrapper.c.o: \
- /home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/src/wrapper.c \
+ /home/nndd411/blockchain/ptoctot/P2C2T_hardcode/src/wrapper.c \
  /usr/include/stdc-predef.h /usr/include/signal.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \

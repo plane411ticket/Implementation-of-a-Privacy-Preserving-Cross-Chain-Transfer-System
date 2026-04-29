@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob"
-  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/bob.pdb"
+  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob"
+  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/bob.pdb"
   "CMakeFiles/bob.dir/bob.c.o"
   "CMakeFiles/bob.dir/bob.c.o.d"
   "CMakeFiles/bob.dir/util.c.o"

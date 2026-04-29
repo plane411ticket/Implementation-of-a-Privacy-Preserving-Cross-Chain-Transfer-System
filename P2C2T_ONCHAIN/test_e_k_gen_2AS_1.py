@@ -1,3 +1,11 @@
+# =============================================================================
+# PHASE 3: PUZZLE PROMISING
+# -----------------------------------------------------------------------------
+# Compute the cryptographic inputs for ECDSA-based two-party adaptor signatures.
+# Generate (e, k_s, k_h1) for the sender-hub pair (BTC side).
+# Generate (e, k_r, k_h2) for the hub-receiver pair (LTC side).
+# Output: inputs injected into alice.c, tumbler.c, and bob.c.
+# =============================================================================
 from cryptos import *
 import bech32
 def bech32_script_pubkey(bech32_addr):
@@ -54,7 +62,14 @@ def main():
     k_h1 = deterministic_generate_k(tx4, priv_h1)
     print("\nk_h1 value:\n", k_h1)
 
-    
+# =========================================================================
+# PHASE 4: PUZZLE SOLVING (BTC side)
+# -------------------------------------------------------------------------
+# Receive (r, s) from tumbler.c (P2C2T_hardcode output).
+# Verify the two-party adaptor signature against the transaction hash.
+# Inject (r, s) into transaction and broadcast to BTC testnet.
+# Output: BTC transfer transaction confirmed on-chain.
+# =========================================================================    
     v = 32
     r = int("A92FE9AA807DB32B5022D9F60B4B638FD89E23801D8D61999BD3892C91BF1B1C",16)
     s = int("10E5520E893B16914B5F5DC71DC73CEE53E5B1779979FC3FAA7A4717433D9F68",16)

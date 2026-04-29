@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/wrapper"
-  "/home/nndd411/blockchain/Implementation-of-a-Privacy-Preserving-Cross-Chain-Transfer-System/P2C2T_hardcode/bin/wrapper.pdb"
+  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/wrapper"
+  "/home/nndd411/blockchain/ptoctot/P2C2T_hardcode/bin/wrapper.pdb"
   "CMakeFiles/wrapper.dir/wrapper.c.o"
   "CMakeFiles/wrapper.dir/wrapper.c.o.d"
 )
